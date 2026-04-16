@@ -7,13 +7,757 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stargazer: A Scalable Model-Fitting Benchmark Environment for AI Agents</title>
 
-  <link rel="icon" href="./static/images/stargazer-mark.svg" type="image/svg+xml">
+  <link rel="icon" href="./icon.png" type="image/png">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <script src="./static/js/case_study_data.js"></script>
   <link rel="stylesheet" href="./static/css/index.css">
+  <style>
+    .case-study-shell {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      border: 1px solid #d9dee3;
+      border-radius: 18px;
+      background: #ffffff;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
+    }
+
+    .case-study-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #24578a;
+      border: 1px solid #dbeafe;
+      font-family: 'Google Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .case-study-kicker::before {
+      content: "";
+      width: 0.45rem;
+      height: 0.45rem;
+      border-radius: 999px;
+      background: #24578a;
+      box-shadow: 0 0 0 4px rgba(36, 87, 138, 0.12);
+    }
+
+    .case-study-title {
+      margin-top: 1rem;
+      margin-bottom: 0.75rem;
+      color: #363636;
+      font-family: 'Google Sans', sans-serif;
+      font-size: clamp(1.85rem, 2vw, 2.35rem);
+      line-height: 1.15;
+    }
+
+    .case-study-lead {
+      margin-bottom: 1rem;
+      color: #4d5b66;
+      line-height: 1.7;
+    }
+
+    .case-study-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+    }
+
+    .case-study-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid #d9dee3;
+      background: #ffffff;
+      color: #4d5b66;
+      font-size: 0.88rem;
+    }
+
+    .case-study-chip strong {
+      color: #261821;
+      font-weight: 700;
+    }
+
+    .case-study-result-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding: 0.9rem 1rem;
+      border-radius: 14px;
+      border: 1px solid #fecaca;
+      background: #fff7f7;
+      align-items: center;
+    }
+
+    .case-study-fail-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: #d00000;
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .case-study-result-item {
+      color: #4d5b66;
+      font-size: 0.92rem;
+    }
+
+    .case-study-result-item strong {
+      color: #261821;
+      font-family: monospace;
+      font-weight: 700;
+    }
+
+    .case-study-data-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      align-items: stretch;
+    }
+
+    .case-study-data-card {
+      padding: 1rem;
+      border: 1px solid #d9dee3;
+      border-radius: 16px;
+      background: #fbfdff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .case-study-data-card > .case-study-split,
+    .case-study-data-card > .case-study-data-table {
+      flex: 1;
+    }
+
+    .case-study-data-card .case-study-mini-panel {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .case-study-data-card h4 {
+      margin: 0 0 0.75rem;
+      color: #363636;
+      font-family: 'Google Sans', sans-serif;
+      font-size: 1rem;
+    }
+
+    .case-study-data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .case-study-data-table th,
+    .case-study-data-table td {
+      padding: 0.45rem 0.35rem;
+      border-bottom: 1px solid #e8edf2;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .case-study-data-table th {
+      color: #4d5b66;
+      font-weight: 700;
+    }
+
+    .case-study-data-table td {
+      color: #261821;
+    }
+
+    .case-study-data-table tr:last-child th,
+    .case-study-data-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .case-study-diagnostics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.55rem 1.1rem;
+      flex: 1;
+      align-content: start;
+    }
+
+    .case-study-diagnostics-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      padding: 0.5rem 0.7rem;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1px solid #e8edf2;
+    }
+
+    .case-study-diagnostics-item .k {
+      color: #6b7a8a;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .case-study-diagnostics-item .v {
+      color: #261821;
+      font-size: 0.92rem;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    .case-study-split {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .case-study-mini-panel {
+      padding: 0.8rem;
+      border: 1px solid #d9dee3;
+      border-radius: 12px;
+      background: #ffffff;
+    }
+
+    .case-study-mini-panel-title {
+      margin-bottom: 0.55rem;
+      color: #24578a;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .case-study-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 1.25rem;
+      align-items: stretch;
+    }
+
+    .case-study-panel {
+      background: #ffffff;
+      border: 1px solid #d9dee3;
+      border-radius: 18px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .case-study-panel > .case-study-plot-wrap {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .case-study-panel > .case-study-timeline {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .case-study-stage-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      padding: 0.85rem 1rem;
+      background: #f8fbff;
+      border-bottom: 1px solid #e8edf2;
+    }
+
+    .case-study-stage-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid #d9dee3;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #4d5b66;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+    }
+
+    .case-study-stage-btn:hover {
+      background: #eff6ff;
+      color: #24578a;
+      border-color: #9ec5ff;
+    }
+
+    .case-study-stage-btn.is-active {
+      background: #24578a;
+      color: #ffffff;
+      border-color: #24578a;
+    }
+
+    .case-study-stage-btn .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.2rem;
+      height: 1.2rem;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #24578a;
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+
+    .case-study-stage-btn.is-active .num {
+      background: #ffffff;
+    }
+
+    .case-study-stage-caption {
+      padding: 0.9rem 1rem;
+      border-bottom: 1px solid #e8edf2;
+      color: #4d5b66;
+      font-size: 0.93rem;
+      line-height: 1.65;
+    }
+
+    .case-study-stage-caption .tag {
+      margin-left: 0.45rem;
+      margin-top: 0.25rem;
+      background: #eff6ff;
+      color: #24578a;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .case-study-stage-caption .tag.is-danger {
+      background: #fff2f2;
+      color: #d00000;
+    }
+
+    .case-study-plot-wrap {
+      padding: 1rem;
+    }
+
+    .case-study-plot {
+      width: 100%;
+      height: 390px;
+    }
+
+    .case-study-panel-title {
+      padding: 1rem 1rem 0.8rem;
+      border-bottom: 1px solid #e8edf2;
+      color: #24578a;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .case-study-timeline {
+      overflow-y: auto;
+      padding: 0.5rem 0.75rem 0.75rem;
+    }
+
+    .case-study-step {
+      margin-top: 0.45rem;
+    }
+
+    .case-study-step-head {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      width: 100%;
+      padding: 0.7rem 0.8rem;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: #ffffff;
+      color: #261821;
+      text-align: left;
+      cursor: pointer;
+      transition: background 140ms ease, border-color 140ms ease;
+    }
+
+    .case-study-step-head:hover,
+    .case-study-step-head.is-open {
+      background: #f8fbff;
+      border-color: #d9dee3;
+    }
+
+    .case-study-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.45rem;
+      height: 1.45rem;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .case-study-step-num.code {
+      background: #eff6ff;
+      color: #24578a;
+    }
+
+    .case-study-step-num.submit {
+      background: #fff2f2;
+      color: #d00000;
+    }
+
+    .case-study-step-type {
+      padding: 0.16rem 0.42rem;
+      border-radius: 6px;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .case-study-step-type.code {
+      background: #eff6ff;
+      color: #24578a;
+    }
+
+    .case-study-step-type.submit {
+      background: #fff2f2;
+      color: #d00000;
+    }
+
+    .case-study-step-title {
+      flex: 1 1 auto;
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .case-study-step-finding {
+      padding: 0.22rem 0.55rem;
+      border-radius: 999px;
+      background: #f5f3ff;
+      color: #5b6fcf;
+      font-size: 0.68rem;
+      font-weight: 700;
+      flex: 0 0 auto;
+    }
+
+    .case-study-step-chevron {
+      color: rgba(38, 24, 33, 0.5);
+      transition: transform 160ms ease;
+      flex: 0 0 auto;
+    }
+
+    .case-study-step-head.is-open .case-study-step-chevron {
+      transform: rotate(90deg);
+    }
+
+    .case-study-step-body {
+      display: none;
+      margin-top: 0.35rem;
+      padding: 0.9rem;
+      border: 1px solid #d9dee3;
+      border-radius: 12px;
+      background: #f8fbff;
+    }
+
+    .case-study-step-body.is-open {
+      display: block;
+    }
+
+    .case-study-note-grid {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .case-study-note-card {
+      padding: 0.8rem 0.9rem;
+      border: 1px solid #d9dee3;
+      border-radius: 12px;
+      background: #ffffff;
+    }
+
+    .case-study-note-label {
+      margin-bottom: 0.25rem;
+      color: rgba(38, 24, 33, 0.48);
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .case-study-note-text {
+      color: #4d5b66;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .case-study-detail-toggle {
+      margin-top: 0.1rem;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #24578a;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .case-study-raw {
+      display: none;
+      margin-top: 0.2rem;
+      padding-top: 0.8rem;
+      border-top: 1px dashed #d9dee3;
+    }
+
+    .case-study-raw.is-open {
+      display: block;
+    }
+
+    .case-study-code-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .case-study-code-label {
+      margin-bottom: 0.35rem;
+      color: rgba(38, 24, 33, 0.48);
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .case-study-code-block {
+      max-height: 220px;
+      overflow: auto;
+      padding: 0.7rem 0.8rem;
+      border: 1px solid #d9dee3;
+      border-radius: 12px;
+      background: #fbfdff;
+      color: rgba(38, 24, 33, 0.82);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+
+    .case-study-fallback {
+      padding: 1rem;
+      border: 1px dashed #d9dee3;
+      border-radius: 14px;
+      background: #fafcff;
+      color: #666;
+      text-align: center;
+    }
+
+    /* ---- Side-peeking mascot robots ---- */
+
+    /* Sections containing a robot need relative positioning */
+    section:has(.peek-mascot) {
+      position: relative;
+      overflow: visible;
+    }
+
+    .peek-mascot {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      cursor: pointer;
+      user-select: none;
+      outline: none;
+    }
+
+    .peek-right { right: 18px; }
+    .peek-left  { left: 18px; }
+
+    /* Robot image */
+    .peek-mascot img {
+      display: block;
+      height: 143px;
+      width: auto;
+      filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.10));
+      transition: filter 280ms ease, transform 280ms ease;
+      animation: peek-bob 3s ease-in-out infinite;
+    }
+
+    @keyframes peek-bob {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-6px); }
+    }
+
+    .peek-mascot:hover img {
+      filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.18));
+      transform: scale(1.06);
+      animation-play-state: paused;
+    }
+
+    /* ---- Speech bubble ---- */
+    .peek-bubble {
+      position: absolute;
+      top: 50%;
+      width: max-content;
+      max-width: 360px;
+      min-width: 180px;
+      padding: 1rem 1.3rem;
+      border-radius: 20px;
+      background: linear-gradient(160deg, #f4f9ff 0%, #ffffff 60%);
+      border: 1.5px solid #d0e2f5;
+      box-shadow:
+        0 12px 36px rgba(36, 87, 138, 0.12),
+        0 2px 6px rgba(0, 0, 0, 0.03);
+      color: #3a4d5e;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      text-align: left;
+      white-space: normal;
+      z-index: 3;
+      /* hidden state */
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease, transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .peek-right .peek-bubble {
+      right: calc(100% + 18px);
+      transform: translateY(-50%) translateX(12px) scale(0.9);
+    }
+    .peek-left .peek-bubble {
+      left: calc(100% + 18px);
+      transform: translateY(-50%) translateX(-12px) scale(0.9);
+    }
+
+    /* Bubble tail — triangular pointer */
+    .peek-bubble::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      margin-top: -8px;
+      width: 0; height: 0;
+      border: 8px solid transparent;
+    }
+    .peek-right .peek-bubble::after {
+      right: -16px;
+      border-left-color: #e8f0fa;
+      border-right: none;
+    }
+    .peek-left .peek-bubble::after {
+      left: -16px;
+      border-right-color: #e8f0fa;
+      border-left: none;
+    }
+
+    /* Bubble visible when talking */
+    .peek-mascot.is-talking .peek-bubble {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .peek-right.is-talking .peek-bubble {
+      transform: translateY(-50%) translateX(0) scale(1);
+    }
+    .peek-left.is-talking .peek-bubble {
+      transform: translateY(-50%) translateX(0) scale(1);
+    }
+
+    /* ---- Click prompt pill ---- */
+    .peek-prompt {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -22px;
+      padding: 0.24rem 0.56rem;
+      border-radius: 999px;
+      background: rgba(239, 246, 255, 0.9);
+      border: 1px solid #dbeafe;
+      color: #5b8ab5;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      transition: opacity 200ms ease;
+      z-index: 1;
+    }
+
+    .peek-mascot.is-talking .peek-prompt {
+      opacity: 0;
+    }
+
+    @media (max-width: 1023px) {
+      .case-study-data-grid,
+      .case-study-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .case-study-timeline {
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .case-study-shell {
+        padding: 1rem;
+      }
+
+      .peek-mascot {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        transform: none !important;
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin: 0.8rem 0;
+      }
+
+      .peek-mascot img {
+        position: relative !important;
+        display: inline-block;
+        height: 90px;
+        animation: none !important;
+      }
+
+      .peek-bubble,
+      .peek-right .peek-bubble,
+      .peek-left .peek-bubble {
+        position: relative !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        max-width: none;
+        opacity: 1 !important;
+        transform: none !important;
+        margin-top: 0.4rem;
+        display: inline-block;
+      }
+
+      .peek-bubble::after { display: none; }
+
+      .peek-prompt { display: none; }
+
+      .case-study-split,
+      .case-study-code-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 
   <script defer src="./static/js/index.js"></script>
 </head>
@@ -32,6 +776,7 @@
       <a class="navbar-item" href="#overview">Overview</a>
       <a class="navbar-item" href="#results">Results</a>
       <a class="navbar-item" href="#figures">Figures</a>
+      <a class="navbar-item" href="#case-study">Case Study</a>
       <a class="navbar-item" href="#citation">Citation</a>
     </div>
   </div>
@@ -43,7 +788,7 @@
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <h1 class="title is-1 publication-title is-bold">
-            <img src="static/images/stargazer-mark.svg" style="width:1.5em;vertical-align: middle" alt="Logo"/>
+            <img src="icon.png" style="width:1.5em;vertical-align: middle" alt="Logo"/>
             <span class="mathvista" style="vertical-align: middle">Stargazer</span>
           </h1>
           <h2 class="subtitle is-3 publication-subtitle">
@@ -85,7 +830,7 @@
                 </a>
               </span>
               <span class="link-block">
-                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                <a href="https://huggingface.co/datasets/liuxinge/Stargazer" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon"><p style="font-size:18px">🤗</p></span>
                   <span>Dataset</span>
                 </a>
@@ -103,16 +848,26 @@
       </div>
     </div>
   </div>
+  <div class="peek-mascot peek-right" tabindex="0" role="button" aria-label="Show mascot note" data-lines="Hi! I scan RV curves for hidden planets.|Stargazer cares about the right system, not just a pretty fit.|Click me again for more tips!">
+    <img src="static/images/robot-hero.png" alt="Robot mascot waving">
+    <div class="peek-bubble">Hi! I scan RV curves for hidden planets.</div>
+    <div class="peek-prompt">Click to chat</div>
+  </div>
 </section>
 
 <section class="section" id="overview">
+  <div class="peek-mascot peek-left" tabindex="0" role="button" aria-label="Show mascot note" data-lines="120 tasks across three tiers!|Even frontier agents struggle with the real archival cases.|Numerical fit ≠ physical recovery — that's the key insight.">
+    <img src="static/images/robot-overview.png" alt="Robot mascot with magnifying glass">
+    <div class="peek-bubble">120 tasks across three tiers!</div>
+    <div class="peek-prompt">Click to chat</div>
+  </div>
   <div class="container" style="margin-bottom: 2vh;">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Introduction</h2>
         <div class="content has-text-justified">
           <p>
-            We introduce <span class="mathvista">Stargazer</span>, a scalable environment for evaluating AI agents on dynamic, iterative physics-grounded model-fitting tasks using inference on radial-velocity time series data. The benchmark contains 120 tasks across three difficulty tiers, including 20 real archival cases, and covers settings ranging from high-SNR single-planet systems to complex multi-planet configurations requiring careful low-SNR analysis.
+            We introduce <span class="mathvista">Stargazer</span>, a scalable environment for evaluating AI agents on dynamic, iterative physics-grounded model-fitting tasks using inference on radial-velocity time series data. The benchmark contains 120 tasks across three tiers, including 20 real archival cases, and covers settings ranging from high-SNR single-planet systems to complex multi-planet configurations requiring careful low-SNR analysis.
           </p>
           <p>
             Across eight frontier agents, we observe a persistent gap between numerical optimization and physical recovery: agents often produce statistically good fits while failing to recover the correct planetary system parameters. <span class="mathvista">Stargazer</span> is designed to evaluate agentic workflows involving period search, iterative Keplerian fitting, model selection, and repeated submission under feedback.
@@ -125,10 +880,10 @@
 
 <section class="hero is-light is-small">
   <div class="hero-body has-text-centered">
-    <h1 class="title is-1 mathvista">
-      <img src="static/images/stargazer-mark.svg" style="width:1em;vertical-align: middle" alt="Logo"/>
+      <h1 class="title is-1 mathvista">
+      <img src="icon.png" style="width:1em;vertical-align: middle" alt="Logo"/>
       <span class="mathvista" style="vertical-align: middle">Overview of Stargazer</span>
-    </h1>
+      </h1>
   </div>
 </section>
 
@@ -145,7 +900,7 @@
           <img src="./static/figures/figure1.svg" alt="Overview of Stargazer"/>
         </div>
         <p class="image-caption">
-          Overview of Stargazer. Left: 120 RV tasks with synthetic difficulty controlled by six physical factors. Center: agents run a periodogram-to-Keplerian workflow and are graded on statistical and physical criteria. Right: strong statistical fit does not guarantee correct physical recovery.
+          Overview of Stargazer. Left: 120 RV tasks controlled by six physical factors. Center: agents run a periodogram-to-Keplerian workflow and are graded on statistical and physical criteria. Right: strong statistical fit does not guarantee correct physical recovery.
         </p>
       </div>
     </div>
@@ -176,16 +931,115 @@
   </div>
 </section>
 
+<section class="section" id="case-study">
+  <div class="peek-mascot peek-right" tabindex="0" role="button" aria-label="Show mascot note" data-lines="Watch how agents iterate through period search and fitting.|Some agents loop forever without converging — can you spot them?|Try clicking through the stages below!">
+    <img src="static/images/robot-casestudy.png" alt="Robot mascot with telescope">
+    <div class="peek-bubble">Watch how agents iterate through period search and fitting.</div>
+    <div class="peek-prompt">Click to chat</div>
+  </div>
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Interactive Case Study</h2>
+        <div class="content has-text-justified">
+          <p>
+            This case study is integrated into the homepage flow as a dedicated section. It illustrates a representative
+            failure mode in <span class="mathvista">Stargazer</span>: the agent achieves a strong statistical fit, but
+            still fails physical recovery because it converges to a two-planet alias and misses the true planet count.
+          </p>
+        </div>
+        <div class="case-study-shell">
+          <div class="has-text-left">
+            <div class="case-study-kicker">Failure Case Demo</div>
+            <h3 class="case-study-title">Alias Convergence Hides the Missing Planet</h3>
+            <p class="case-study-lead">
+              This run reaches an excellent residual RMS, but still fails because the model converges to a two-planet
+              alias and misses the true planet count. The benchmark rewards physical recovery, not just a visually tight fit.
+            </p>
+            <div id="caseStudyHeroInfo" class="case-study-chip-row"></div>
+            <div class="case-study-result-strip">
+              <span class="case-study-fail-badge">Fail</span>
+              <span class="case-study-result-item">Match <strong id="caseStudyMatchScore">--</strong></span>
+              <span class="case-study-result-item">&Delta;BIC <strong id="caseStudyDeltaBic">--</strong></span>
+              <span class="case-study-result-item">RMS <strong id="caseStudyRmsValue">--</strong></span>
+              <span class="case-study-result-item">Detected <strong id="caseStudyCountValue">--</strong></span>
+              <span class="case-study-result-item">Tokens <strong id="caseStudyTokenValue">--</strong></span>
+            </div>
+
+            <div class="case-study-data-grid">
+              <div class="case-study-data-card">
+                <h4>Ground Truth vs Alias Recovery</h4>
+                <div class="case-study-split">
+                  <div class="case-study-mini-panel">
+                    <div class="case-study-mini-panel-title">True Planets</div>
+                    <table class="case-study-data-table">
+                      <thead>
+                        <tr><th>Planet</th><th>Period</th><th>K</th><th>e</th></tr>
+                      </thead>
+                      <tbody id="caseStudyTruthTable"></tbody>
+                    </table>
+                  </div>
+                  <div class="case-study-mini-panel">
+                    <div class="case-study-mini-panel-title">Recovered Alias Fit</div>
+                    <table class="case-study-data-table">
+                      <thead>
+                        <tr><th>Planet</th><th>Period</th><th>K</th><th>e</th></tr>
+                      </thead>
+                      <tbody id="caseStudyRecoveredTable"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="case-study-data-card">
+                <h4>Evaluator Diagnostics</h4>
+                <div id="caseStudyDiagnosticsTable" class="case-study-diagnostics-grid"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="case-study-grid">
+            <div class="case-study-panel">
+              <div id="caseStudyStageNav" class="case-study-stage-nav"></div>
+              <div id="caseStudyStageCaption" class="case-study-stage-caption"></div>
+              <div class="case-study-plot-wrap">
+                <div id="caseStudyPlot" class="case-study-plot"></div>
+              </div>
+            </div>
+
+            <div class="case-study-panel">
+              <div class="case-study-panel-title">Agent Timeline: 6 selected steps</div>
+              <div id="caseStudyTimeline" class="case-study-timeline"></div>
+            </div>
+          </div>
+
+          <div id="caseStudyFallback" class="case-study-fallback" hidden>
+            Case study data could not be loaded. The original standalone demo page is still available.
+          </div>
+        </div>
+        <p class="image-caption">
+          Interactive walkthrough of a failure case where fit quality passes, but the recovered planetary system is still wrong.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="hero is-light is-small">
   <div class="hero-body has-text-centered">
-    <h1 class="title is-1 mathvista" id="results">
-      <img src="static/images/stargazer-mark.svg" style="width:1em;vertical-align: middle" alt="Logo"/>
+      <h1 class="title is-1 mathvista" id="results">
+      <img src="icon.png" style="width:1em;vertical-align: middle" alt="Logo"/>
       <span class="mathvista" style="vertical-align: middle">Main Results</span>
-    </h1>
+      </h1>
   </div>
 </section>
 
 <section class="section">
+  <div class="peek-mascot peek-left" tabindex="0" role="button" aria-label="Show mascot note" data-lines="A low RMS can still hide the wrong physics.|On hard tasks, physical recovery is the real bottleneck.|Skills help on Easy tier, but don't transfer to Hard.">
+    <img src="static/images/robot-results.png" alt="Robot mascot peeking">
+    <div class="peek-bubble">A low RMS can still hide the wrong physics.</div>
+    <div class="peek-prompt">Click to chat</div>
+  </div>
   <div class="container">
     <div class="columns is-centered">
       <div class="column is-four-fifths">
@@ -249,7 +1103,7 @@
             </tr>
             <tr>
               <td>GPT-5-mini</td>
-              <td class="easy-col"><span class="second-best">76.7</span></td><td class="med-col">33.6</td><td class="hard-col">2.5</td>
+              <td class="easy-col"><span class="second-best">76.7</span></td><td class="med-col"><span class="second-best">33.6</span></td><td class="hard-col">2.5</td>
               <td class="easy-col"><span class="second-best">76.7</span></td><td class="med-col"><span class="second-best">46.7</span></td><td class="hard-col">5.0</td>
               <td class="easy-col"><strong>95.0</strong></td><td class="med-col">35.0</td><td class="hard-col">2.5</td>
               <td class="real-col zero-real">0.0</td>
@@ -291,7 +1145,7 @@
             </tr>
             <tr>
               <td><strong>GPT-5.3-codex</strong></td>
-              <td class="easy-col"><strong>80.0</strong></td><td class="med-col"><span class="second-best">30.8</span></td><td class="hard-col">4.2</td>
+              <td class="easy-col"><strong>80.0</strong></td><td class="med-col">30.8</td><td class="hard-col">4.2</td>
               <td class="easy-col"><strong>88.3</strong></td><td class="med-col"><strong>48.3</strong></td><td class="hard-col"><strong>7.5</strong></td>
               <td class="easy-col"><strong>95.0</strong></td><td class="med-col"><strong>40.0</strong></td><td class="hard-col"><span class="second-best">7.5</span></td>
               <td class="real-col zero-real">0.0</td>
@@ -299,7 +1153,7 @@
           </tbody>
         </table>
         <p class="table-caption">
-          Main results on <span class="mathvista">Stargazer</span> across difficulty tiers computed over three independent runs. Pass rates and Env Done rates are averaged; Pass@3 reports the fraction of tasks solved in at least one run. <strong>Bold</strong> = best per column; <span class="second-best">underlined</span> = second best.
+          Main results on <span class="mathvista">Stargazer</span> across tiers computed over three independent runs. Pass rates and Env Done rates are averaged; Pass@3 reports the fraction of tasks solved in at least one run. <strong>Bold</strong> = best per column; <span class="second-best">underlined</span> = second best.
         </p>
       </div>
     </div>
@@ -310,7 +1164,7 @@
           <img src="./static/figures/statistical_vs_physical.svg" alt="Statistical versus physical"/>
         </div>
         <p class="image-caption">
-          Statistical criteria remain relatively high while physical recovery drops sharply with difficulty.
+          Statistical criteria remain relatively high while physical recovery drops sharply on harder tiers.
         </p>
       </div>
       <div class="column is-half">
@@ -383,6 +1237,11 @@
 </section>
 
 <section class="section" id="figures">
+  <div class="peek-mascot peek-right" tabindex="0" role="button" aria-label="Show mascot note" data-lines="These figures show where agents loop or recover.|Trace-level behavior matters as much as scores.|Failure correlations reveal systemic weaknesses.">
+    <img src="static/images/robot-figures.png" alt="Robot mascot peeking">
+    <div class="peek-bubble">These figures show where agents loop or recover.</div>
+    <div class="peek-prompt">Click to chat</div>
+  </div>
   <div class="container">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
@@ -394,7 +1253,7 @@
         <div class="publication-image">
           <img src="./static/figures/failure_correlation_heatmap.svg" alt="Failure correlation heatmap"/>
         </div>
-        <p class="image-caption">Failure correlation heatmap across difficulty drivers and evaluation outcomes.</p>
+        <p class="image-caption">Failure correlation heatmap across task drivers and evaluation outcomes.</p>
       </div>
       <div class="column is-half">
         <div class="publication-image">
@@ -442,6 +1301,11 @@
 </section>
 
 <section class="section" id="citation">
+  <div class="peek-mascot peek-left" tabindex="0" role="button" aria-label="Show mascot note" data-lines="Thanks for reading! Consider citing our work.|Stargazer is open-source — contributions welcome!|Happy planet hunting!">
+    <img src="static/images/robot-citation.png" alt="Robot mascot reading">
+    <div class="peek-bubble">Thanks for reading! Consider citing our work.</div>
+    <div class="peek-prompt">Click to chat</div>
+  </div>
   <div class="container">
     <div class="columns is-centered">
       <div class="column is-four-fifths">
@@ -451,7 +1315,7 @@
   title={Stargazer: A Scalable Model-Fitting Benchmark Environment for AI Agents under Astrophysical Constraints},
   author={Liu, Xinge and Zhang, Terry Jingchen and Sch{\"o}lkopf, Bernhard and Jin, Zhijing and Menou, Kristen},
   year={2026},
-  note={COLM 2026 submission}
+  note={Venue placeholder}
 }</code></pre>
         </div>
       </div>
@@ -464,13 +1328,470 @@
     <div class="column is-8">
       <div class="content">
         <p>
-          This website is adapted from <a href="https://seephys.github.io/">SeePhys</a>, <a href="https://mathvista.github.io/">MathVista</a>, and <a href="https://nerfies.github.io/">Nerfies</a>, licensed under a
+          This website is adapted from <a href="https://mathvista.github.io/">MathVista</a> and <a href="https://nerfies.github.io/">Nerfies</a>, licensed under a
           <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
         </p>
       </div>
     </div>
   </div>
 </footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const fallback = document.getElementById("caseStudyFallback");
+    const heroInfo = document.getElementById("caseStudyHeroInfo");
+    const truthTable = document.getElementById("caseStudyTruthTable");
+    const recoveredTable = document.getElementById("caseStudyRecoveredTable");
+    const diagnosticsTable = document.getElementById("caseStudyDiagnosticsTable");
+    const stageNav = document.getElementById("caseStudyStageNav");
+    const stageCaption = document.getElementById("caseStudyStageCaption");
+    const timeline = document.getElementById("caseStudyTimeline");
+    const plotDiv = document.getElementById("caseStudyPlot");
+    let caseStudyRendered = false;
+
+    const sanitizeText = (value) => {
+      if (!value) return "";
+      return String(value)
+        .replaceAll("RVBench", "Stargazer")
+        .replaceAll("rvbench", "stargazer")
+        .replaceAll("benchmark", "system")
+        .replaceAll("evaluator", "Stargazer scorer")
+        .replaceAll("environment", "Stargazer run")
+        .replaceAll("submit_action", "stargazer_submit");
+    };
+
+    const escHtml = (value) => {
+      const node = document.createElement("div");
+      node.textContent = sanitizeText(value);
+      return node.innerHTML;
+    };
+
+    const stageMeta = [
+      { label: "Raw Data", caption: "43 RV observations across 275 days. Three true planets are blended into one dominant peak.", meta: "3 true planets" },
+      { label: "Baseline", caption: "One-sine baseline locks onto the ~117-day signal and leaves large structure behind.", rms: "3.35" },
+      { label: "1-Keplerian", caption: "A single Keplerian fit improves the main mode, but residuals remain far above the noise floor.", rms: "3.06" },
+      { label: "Residuals", caption: "Residual analysis suggests a long-period companion near ~172 days, not the missing count mismatch.", meta: "alias peak" },
+      { label: "2-Planet Alias", caption: "Two-planet fit reaches a low RMS, but converges to 112d + 165d and still omits one real planet.", rms: "1.08" },
+      { label: "Truth Gap", caption: "Agent fit versus ground truth: fit quality looks good, physical recovery does not.", meta: "match -0.008" }
+    ];
+
+    const stepMeta = [
+      {
+        title: "Periodogram & Baseline Scan",
+        finding: "Peak at ~118d",
+        type: "code",
+        summary: "The agent identifies a strong dominant signal near 118 days and uses it as the first working hypothesis.",
+        action: "Runs Lomb-Scargle and a baseline sine fit to establish the easiest explanation for the RV curve.",
+        why: "This is reasonable, but it compresses a three-planet system into one broad mode and sets up the later alias trap."
+      },
+      {
+        title: "1-Planet Kepler Fit",
+        finding: "RMS = 3.06",
+        type: "code",
+        summary: "A single Keplerian model improves the fit, but the residuals are still much larger than the measurement noise.",
+        action: "Optimizes a 6-parameter Keplerian around the ~117-day mode.",
+        why: "At this point the run should strongly suspect additional structure, because RMS remains far above the 0.93 m/s noise scale."
+      },
+      {
+        title: "Residual Alias Search",
+        finding: "Second peak ~172d",
+        type: "code",
+        summary: "Residual analysis finds a second long-period signal around 172 days and treats it as the next planet candidate.",
+        action: "Fits a second component to the residuals instead of revisiting the planet count mismatch more globally.",
+        why: "This is the key wrong turn: the model converges to a plausible alias pair instead of recovering all three true planets."
+      },
+      {
+        title: "Best Submission Attempt",
+        finding: "Low RMS, still fail",
+        type: "submit",
+        summary: "The two-planet alias fit achieves an excellent residual RMS and positive ΔBIC, but Stargazer still rejects it.",
+        action: "Submits planets at roughly 112 days and 165 days with physically consistent orbital fields.",
+        why: "Stargazer scores physical recovery, so low residual error is not enough when the recovered system has the wrong count and poor match."
+      },
+      {
+        title: "Final Diagnostics",
+        finding: "2 planets vs 3 true",
+        type: "code",
+        summary: "The run ends with a clear mismatch: the fit looks numerically good, yet the recovered architecture is still incorrect.",
+        action: "Prints final baseline, one-planet, and two-planet diagnostics before stopping.",
+        why: "This is the main lesson of the failure case: optimization quality and scientific correctness can diverge."
+      },
+      {
+        title: "Final Submission",
+        finding: "FAIL env_done",
+        type: "submit",
+        summary: "The Stargazer run closes on the same two-planet submission, confirming a final failure despite acceptable RMS and ΔBIC.",
+        action: "Resubmits the best alias solution as the terminal answer.",
+        why: "The Stargazer scorer marks ok_match = false and ok_count = false, which is exactly why this makes a good failure demo."
+      }
+    ];
+
+    const plotLayout = {
+      paper_bgcolor: "#ffffff",
+      plot_bgcolor: "#ffffff",
+      font: { family: "Noto Sans, sans-serif", color: "rgba(38,24,33,0.72)", size: 12 },
+      margin: { l: 60, r: 18, t: 10, b: 45 },
+      xaxis: {
+        title: "Time (days)",
+        color: "rgba(38,24,33,0.58)",
+        gridcolor: "rgba(38,24,33,0.08)",
+        zerolinecolor: "rgba(38,24,33,0.1)",
+        tickfont: { size: 11 }
+      },
+      yaxis: {
+        title: "RV (m/s)",
+        color: "rgba(38,24,33,0.58)",
+        gridcolor: "rgba(38,24,33,0.08)",
+        zerolinecolor: "rgba(38,24,33,0.1)",
+        tickfont: { size: 11 }
+      },
+      legend: {
+        bgcolor: "rgba(255,255,255,0.94)",
+        bordercolor: "rgba(38,24,33,0.1)",
+        borderwidth: 1,
+        font: { size: 11, color: "#261821" }
+      },
+      hovermode: "closest"
+    };
+
+    const plotConfig = {
+      displayModeBar: true,
+      modeBarButtonsToRemove: ["lasso2d", "select2d", "autoScale2d"],
+      displaylogo: false
+    };
+
+    const buildBody = (step, metaInfo, idx) => {
+      const rawLabels = metaInfo.type === "submit"
+        ? ["Submission Payload", "Evaluator Output"]
+        : ["Code", "Output"];
+
+      return `
+        <div class="case-study-note-grid">
+          <div class="case-study-note-card">
+            <div class="case-study-note-label">What Happened</div>
+            <div class="case-study-note-text">${escHtml(metaInfo.summary)}</div>
+          </div>
+          <div class="case-study-note-card">
+            <div class="case-study-note-label">Action</div>
+            <div class="case-study-note-text">${escHtml(metaInfo.action)}</div>
+          </div>
+          <div class="case-study-note-card">
+            <div class="case-study-note-label">Why It Matters</div>
+            <div class="case-study-note-text">${escHtml(metaInfo.why)}</div>
+          </div>
+          <button class="case-study-detail-toggle" type="button" data-raw-toggle="${idx}">Show Raw Step Details</button>
+          <div class="case-study-raw" data-raw="${idx}">
+            <div class="case-study-code-grid">
+              <div>
+                <div class="case-study-code-label">${rawLabels[0]}</div>
+                <div class="case-study-code-block">${escHtml(step.code)}</div>
+              </div>
+              <div>
+                <div class="case-study-code-label">${rawLabels[1]}</div>
+                <div class="case-study-code-block">${escHtml(step.output)}</div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+    };
+
+    const renderCaseStudy = () => {
+      if (caseStudyRendered) return;
+      const data = window.CASE_STUDY_DATA;
+
+      if (!data) {
+        fallback.hidden = false;
+        return;
+      }
+
+      caseStudyRendered = true;
+
+      const curves = data.curves;
+      const meta = data.meta;
+
+      [
+        ["Obs", meta.n_obs],
+        ["Span", `${meta.span_days} d`],
+        ["σ", `${meta.median_sigma.toFixed(2)} m/s`]
+      ].forEach(([label, value]) => {
+        const node = document.createElement("div");
+        node.className = "case-study-chip";
+        node.innerHTML = `<span>${label}</span><strong>${value}</strong>`;
+        heroInfo.appendChild(node);
+      });
+
+      meta.true_planets.forEach((planet, idx) => {
+        const node = document.createElement("div");
+        node.className = "case-study-chip";
+        node.innerHTML = `<span>T${idx + 1}</span><strong>${planet.P_days}d K=${planet.K_ms} e=${planet.e}</strong>`;
+        heroInfo.appendChild(node);
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <th>T${idx + 1}</th>
+          <td>${planet.P_days} d</td>
+          <td>${planet.K_ms} m/s</td>
+          <td>${planet.e}</td>`;
+        truthTable.appendChild(row);
+      });
+
+      [
+        { label: "A1", period: "111.73 d", k: "12.85 m/s", e: "0.285" },
+        { label: "A2", period: "164.52 d", k: "6.18 m/s", e: "0.509" }
+      ].forEach((planet) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <th>${planet.label}</th>
+          <td>${planet.period}</td>
+          <td>${planet.k}</td>
+          <td>${planet.e}</td>`;
+        recoveredTable.appendChild(row);
+      });
+
+      [
+        ["Task ID", String(meta.task_id).replace(/_diff\d+$/i, "")],
+        ["Model", meta.model],
+        ["Observations", meta.n_obs],
+        ["Time Span", `${meta.span_days} days`],
+        ["Median σ", `${meta.median_sigma.toFixed(2)} m/s`],
+        ["Reward", meta.reward.toFixed(3)],
+        ["Stop Reason", meta.stop_reason]
+      ].forEach(([label, value]) => {
+        const cell = document.createElement("div");
+        cell.className = "case-study-diagnostics-item";
+        cell.innerHTML = `<span class="k">${label}</span><span class="v">${value}</span>`;
+        diagnosticsTable.appendChild(cell);
+      });
+
+      document.getElementById("caseStudyMatchScore").textContent = meta.match_score.toFixed(3);
+      document.getElementById("caseStudyDeltaBic").textContent = meta.delta_bic.toFixed(1);
+      document.getElementById("caseStudyRmsValue").textContent = `${meta.rms_ms.toFixed(2)} m/s`;
+      document.getElementById("caseStudyCountValue").textContent = `${meta.n_detected_planets}/${meta.n_true_planets}`;
+      document.getElementById("caseStudyTokenValue").textContent = `${Math.round(meta.tokens_in / 1000)}K`;
+
+      const obsTrace = (yValue) => ({
+        x: curves.obs_t,
+        y: yValue || curves.obs_rv,
+        error_y: yValue ? undefined : {
+          type: "data",
+          array: curves.obs_s,
+          visible: true,
+          color: "rgba(36,87,138,0.18)",
+          thickness: 1
+        },
+        mode: "markers",
+        marker: {
+          color: "#4c8fd9",
+          size: 6,
+          line: { color: "rgba(76,143,217,0.22)", width: 1 }
+        },
+        name: "Observations",
+        type: "scatter"
+      });
+
+      const lineTrace = (yValue, name, color, dashStyle) => ({
+        x: curves.t_fine,
+        y: yValue,
+        mode: "lines",
+        line: { color, width: 2.5, dash: dashStyle || "solid" },
+        name,
+        type: "scatter"
+      });
+
+      const getTraces = (stage) => {
+        switch (stage) {
+          case 0:
+            return [obsTrace()];
+          case 1:
+            return [obsTrace(), lineTrace(curves.rv_baseline, "Baseline Sine", "#946200", "dash")];
+          case 2:
+            return [obsTrace(), lineTrace(curves.rv_kep1, "1-Planet Keplerian", "#d66249", "dash")];
+          case 3:
+            return [
+              {
+                x: curves.obs_t,
+                y: curves.resid_kep1,
+                mode: "markers",
+                marker: {
+                  color: "#5b6fcf",
+                  size: 6,
+                  line: { color: "rgba(91,111,207,0.22)", width: 1 }
+                },
+                name: "Residuals",
+                type: "scatter"
+              },
+              {
+                x: [curves.obs_t[0], curves.obs_t[curves.obs_t.length - 1]],
+                y: [0, 0],
+                mode: "lines",
+                line: { color: "rgba(38,24,33,0.16)", width: 1, dash: "dot" },
+                showlegend: false,
+                type: "scatter"
+              }
+            ];
+          case 4:
+            return [obsTrace(), lineTrace(curves.rv_agent, "Agent Alias Fit", "#d00000", "dash")];
+          case 5:
+            return [
+              obsTrace(),
+              lineTrace(curves.rv_agent, "Agent Alias Fit", "#d00000", "dash"),
+              lineTrace(curves.rv_truth, "Ground Truth", "#24578a", "solid")
+            ];
+          default:
+            return [obsTrace()];
+        }
+      };
+
+      const setStage = (index) => {
+        stageNav.querySelectorAll(".case-study-stage-btn").forEach((button, idx) => {
+          button.classList.toggle("is-active", idx === index);
+        });
+
+        const stage = stageMeta[index];
+        const extraTags = [];
+        if (stage.rms) {
+          extraTags.push(`<span class="tag">RMS ${stage.rms} m/s</span>`);
+        }
+        if (stage.meta) {
+          extraTags.push(`<span class="tag is-danger">${stage.meta}</span>`);
+        }
+        stageCaption.innerHTML = `${stage.caption}${extraTags.length ? ` ${extraTags.join(" ")}` : ""}`;
+
+        if (typeof Plotly === "undefined") {
+          plotDiv.innerHTML = '<div class="case-study-fallback">Plotly failed to load. The case study data is available, but the chart library is unavailable in this browser context.</div>';
+          return;
+        }
+
+        const layout = { ...plotLayout };
+        if (index === 3) {
+          layout.yaxis = { ...layout.yaxis, title: "Residual RV (m/s)" };
+        }
+        Plotly.react(plotDiv, getTraces(index), layout, plotConfig);
+      };
+
+      stageMeta.forEach((stage, idx) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `case-study-stage-btn${idx === 0 ? " is-active" : ""}`;
+        button.innerHTML = `<span class="num">${idx + 1}</span>${stage.label}`;
+        button.addEventListener("click", () => setStage(idx));
+        stageNav.appendChild(button);
+      });
+
+      data.steps.forEach((step, idx) => {
+        const metaInfo = stepMeta[idx];
+        const item = document.createElement("div");
+        item.className = "case-study-step";
+        item.innerHTML = `
+          <button type="button" class="case-study-step-head" data-step-toggle="${idx}">
+            <span class="case-study-step-num ${metaInfo.type}">${step.step}</span>
+            <span class="case-study-step-type ${metaInfo.type}">${metaInfo.type === "submit" ? "Submit" : "Code"}</span>
+            <span class="case-study-step-title">${metaInfo.title}</span>
+            <span class="case-study-step-finding">${metaInfo.finding}</span>
+            <span class="case-study-step-chevron">&#9656;</span>
+          </button>
+          <div class="case-study-step-body" data-step-body="${idx}">
+            ${buildBody(step, metaInfo, idx)}
+          </div>`;
+        timeline.appendChild(item);
+      });
+
+      timeline.querySelectorAll("[data-raw-toggle]").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.stopPropagation();
+          const idx = button.getAttribute("data-raw-toggle");
+          const raw = timeline.querySelector(`[data-raw="${idx}"]`);
+          const open = raw.classList.toggle("is-open");
+          button.textContent = open ? "Hide Raw Step Details" : "Show Raw Step Details";
+        });
+      });
+
+      timeline.querySelectorAll("[data-step-toggle]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const idx = button.getAttribute("data-step-toggle");
+          const isOpen = button.classList.contains("is-open");
+
+          timeline.querySelectorAll("[data-step-toggle].is-open").forEach((node) => {
+            node.classList.remove("is-open");
+          });
+          timeline.querySelectorAll("[data-step-body].is-open").forEach((node) => {
+            node.classList.remove("is-open");
+          });
+
+          if (!isOpen) {
+            button.classList.add("is-open");
+            timeline.querySelector(`[data-step-body="${idx}"]`).classList.add("is-open");
+          }
+        });
+      });
+
+      setStage(0);
+    };
+
+    renderCaseStudy();
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const allMascots = document.querySelectorAll(".peek-mascot");
+
+    /* Close all speech bubbles */
+    const closeAll = () => {
+      allMascots.forEach((m) => m.classList.remove("is-talking"));
+    };
+
+    /* Click outside any mascot → close bubbles */
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".peek-mascot")) closeAll();
+    });
+
+    allMascots.forEach((node) => {
+      const bubble = node.querySelector(".peek-bubble");
+      const lines = (node.dataset.lines || "")
+        .split("|")
+        .map((item) => item.trim())
+        .filter(Boolean);
+
+      if (!bubble || lines.length === 0) return;
+
+      let current = 0;
+      const render = () => { bubble.textContent = lines[current]; };
+      render();
+
+      /* Click: open → cycle → close after last message */
+      node.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (node.classList.contains("is-talking")) {
+          if (current < lines.length - 1) {
+            current++;
+            render();
+          } else {
+            /* Last message → close bubble, reset to start */
+            node.classList.remove("is-talking");
+            current = 0;
+            render();
+          }
+        } else {
+          closeAll();
+          current = 0;
+          render();
+          node.classList.add("is-talking");
+        }
+      });
+
+      /* Keyboard accessibility */
+      node.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          node.click();
+        } else if (e.key === "Escape") {
+          closeAll();
+        }
+      });
+    });
+  });
+</script>
 
 </body>
 </html>

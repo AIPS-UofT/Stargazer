@@ -17,6 +17,73 @@ body {
   color: #666;
 }
 
+.mascot-callout {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.mascot-callout img {
+  width: auto;
+  height: 86px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.mascot-bubble {
+  max-width: 420px;
+  padding: 0.7rem 0.95rem;
+  background: #fff;
+  border: 1px solid #d9dee3;
+  border-radius: 16px;
+  color: #4d5b66;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  text-align: left;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.mascot-callout:hover img,
+.mascot-callout:focus-within img,
+.mascot-callout.is-active img {
+  transform: translateY(-3px) rotate(-2deg) scale(1.03);
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.16));
+}
+
+.mascot-callout:hover .mascot-bubble,
+.mascot-callout:focus-within .mascot-bubble,
+.mascot-callout.is-active .mascot-bubble {
+  transform: translateY(-2px);
+  border-color: #9ec5ff;
+  box-shadow: 0 12px 24px rgba(36, 87, 138, 0.12);
+}
+
+.hero-mascot {
+  justify-content: center;
+}
+
+.hero-mascot img {
+  height: 104px;
+}
+
+.section-mascot-callout {
+  margin-bottom: 0.9rem;
+}
+
+.align-right {
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.align-center {
+  justify-content: center;
+  width: 100%;
+}
+
 .easy-col {
   background-color: #eff6ff;
 }
@@ -224,5 +291,24 @@ pre {
 
   .publication-image iframe {
     min-height: 340px;
+  }
+
+  .mascot-callout {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .mascot-callout img {
+    height: 72px;
+  }
+
+  .hero-mascot img {
+    height: 86px;
+  }
+
+  .mascot-bubble {
+    max-width: 100%;
+    text-align: center;
   }
 }

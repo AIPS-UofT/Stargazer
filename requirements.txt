@@ -1,0 +1,9 @@
+numpy>=1.24
+scipy>=1.9
+rebound>=3.24
+celerite2>=0.2
+pytest>=7.0
+python-dotenv>=1.0
+openai>=1.0
+anthropic>=0.30
+json-repair>=0.28

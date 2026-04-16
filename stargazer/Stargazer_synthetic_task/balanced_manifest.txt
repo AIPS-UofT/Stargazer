@@ -1,0 +1,738 @@
+{
+  "completed": true,
+  "counts": {
+    "1": 10,
+    "2": 10,
+    "3": 10,
+    "4": 10,
+    "5": 10,
+    "6": 10,
+    "7": 10,
+    "8": 10,
+    "9": 10,
+    "10": 10
+  },
+  "tasks_by_difficulty": {
+    "1": [
+      {
+        "task_id": "seed300016_diff1",
+        "difficulty": 1,
+        "n_planets": 1,
+        "n_obs": 101,
+        "raw_score": 1
+      },
+      {
+        "task_id": "seed300025_diff1",
+        "difficulty": 1,
+        "n_planets": 1,
+        "n_obs": 80,
+        "raw_score": 1
+      },
+      {
+        "task_id": "seed300042_diff1",
+        "difficulty": 1,
+        "n_planets": 1,
+        "n_obs": 98,
+        "raw_score": 1
+      },
+      {
+        "task_id": "seed300060_diff1",
+        "difficulty": 1,
+        "n_planets": 1,
+        "n_obs": 108,
+        "raw_score": 1
+      },
+      {
+        "task_id": "seed300069_diff1",
+        "difficulty": 1,
+        "n_planets": 1,
+        "n_obs": 114,
+        "raw_score": 1
+      },
+      {
+        "task_id": "seed300078_diff1",
+        "difficulty": 1,
+        "n_planets": 1,
+        "n_obs": 80,
+        "raw_score": 1
+      },
+      {
+        "task_id": "seed300087_diff1",
+        "difficulty": 1,
+        "n_planets": 1,
+        "n_obs": 95,
+        "raw_score": 1
+      },
+      {
+        "task_id": "seed300092_diff1",
+        "difficulty": 1,
+        "n_planets": 1,
+        "n_obs": 95,
+        "raw_score": 1
+      },
+      {
+        "task_id": "seed300116_diff1",
+        "difficulty": 1,
+        "n_planets": 1,
+        "n_obs": 94,
+        "raw_score": 1
+      },
+      {
+        "task_id": "seed300119_diff1",
+        "difficulty": 1,
+        "n_planets": 1,
+        "n_obs": 99,
+        "raw_score": 1
+      }
+    ],
+    "2": [
+      {
+        "task_id": "seed1108_diff2",
+        "difficulty": 2,
+        "n_planets": 1,
+        "n_obs": 80,
+        "raw_score": 2
+      },
+      {
+        "task_id": "seed1206_diff2",
+        "difficulty": 2,
+        "n_planets": 1,
+        "n_obs": 80,
+        "raw_score": 2
+      },
+      {
+        "task_id": "seed1457_diff2",
+        "difficulty": 2,
+        "n_planets": 1,
+        "n_obs": 80,
+        "raw_score": 2
+      },
+      {
+        "task_id": "seed1508_diff2",
+        "difficulty": 2,
+        "n_planets": 1,
+        "n_obs": 80,
+        "raw_score": 2
+      },
+      {
+        "task_id": "seed1560_diff2",
+        "difficulty": 2,
+        "n_planets": 1,
+        "n_obs": 80,
+        "raw_score": 2
+      },
+      {
+        "task_id": "seed1665_diff2",
+        "difficulty": 2,
+        "n_planets": 1,
+        "n_obs": 80,
+        "raw_score": 2
+      },
+      {
+        "task_id": "seed1743_diff2",
+        "difficulty": 2,
+        "n_planets": 1,
+        "n_obs": 80,
+        "raw_score": 2
+      },
+      {
+        "task_id": "seed210_diff2",
+        "difficulty": 2,
+        "n_planets": 2,
+        "n_obs": 80,
+        "raw_score": 2
+      },
+      {
+        "task_id": "seed44_diff2",
+        "difficulty": 2,
+        "n_planets": 1,
+        "n_obs": 80,
+        "raw_score": 2
+      },
+      {
+        "task_id": "seed503_diff2",
+        "difficulty": 2,
+        "n_planets": 1,
+        "n_obs": 80,
+        "raw_score": 2
+      }
+    ],
+    "3": [
+      {
+        "task_id": "seed111_diff3",
+        "difficulty": 3,
+        "n_planets": 1,
+        "n_obs": 72,
+        "raw_score": 3
+      },
+      {
+        "task_id": "seed121_diff3",
+        "difficulty": 3,
+        "n_planets": 2,
+        "n_obs": 62,
+        "raw_score": 3
+      },
+      {
+        "task_id": "seed129_diff3",
+        "difficulty": 3,
+        "n_planets": 1,
+        "n_obs": 67,
+        "raw_score": 3
+      },
+      {
+        "task_id": "seed20_diff3",
+        "difficulty": 3,
+        "n_planets": 1,
+        "n_obs": 68,
+        "raw_score": 3
+      },
+      {
+        "task_id": "seed29_diff3",
+        "difficulty": 3,
+        "n_planets": 1,
+        "n_obs": 80,
+        "raw_score": 3
+      },
+      {
+        "task_id": "seed30_diff3",
+        "difficulty": 3,
+        "n_planets": 1,
+        "n_obs": 70,
+        "raw_score": 3
+      },
+      {
+        "task_id": "seed35_diff3",
+        "difficulty": 3,
+        "n_planets": 1,
+        "n_obs": 67,
+        "raw_score": 3
+      },
+      {
+        "task_id": "seed60_diff3",
+        "difficulty": 3,
+        "n_planets": 1,
+        "n_obs": 57,
+        "raw_score": 3
+      },
+      {
+        "task_id": "seed75_diff3",
+        "difficulty": 3,
+        "n_planets": 1,
+        "n_obs": 62,
+        "raw_score": 3
+      },
+      {
+        "task_id": "seed96_diff3",
+        "difficulty": 3,
+        "n_planets": 2,
+        "n_obs": 75,
+        "raw_score": 3
+      }
+    ],
+    "4": [
+      {
+        "task_id": "seed16_diff4",
+        "difficulty": 4,
+        "n_planets": 2,
+        "n_obs": 56,
+        "raw_score": 4
+      },
+      {
+        "task_id": "seed22_diff4",
+        "difficulty": 4,
+        "n_planets": 1,
+        "n_obs": 53,
+        "raw_score": 4
+      },
+      {
+        "task_id": "seed25_diff4",
+        "difficulty": 4,
+        "n_planets": 1,
+        "n_obs": 52,
+        "raw_score": 4
+      },
+      {
+        "task_id": "seed34_diff4",
+        "difficulty": 4,
+        "n_planets": 1,
+        "n_obs": 55,
+        "raw_score": 4
+      },
+      {
+        "task_id": "seed38_diff4",
+        "difficulty": 4,
+        "n_planets": 1,
+        "n_obs": 74,
+        "raw_score": 4
+      },
+      {
+        "task_id": "seed3_diff4",
+        "difficulty": 4,
+        "n_planets": 1,
+        "n_obs": 57,
+        "raw_score": 4
+      },
+      {
+        "task_id": "seed45_diff4",
+        "difficulty": 4,
+        "n_planets": 2,
+        "n_obs": 56,
+        "raw_score": 4
+      },
+      {
+        "task_id": "seed48_diff4",
+        "difficulty": 4,
+        "n_planets": 1,
+        "n_obs": 55,
+        "raw_score": 4
+      },
+      {
+        "task_id": "seed6_diff4",
+        "difficulty": 4,
+        "n_planets": 2,
+        "n_obs": 63,
+        "raw_score": 4
+      },
+      {
+        "task_id": "seed8_diff4",
+        "difficulty": 4,
+        "n_planets": 1,
+        "n_obs": 45,
+        "raw_score": 4
+      }
+    ],
+    "5": [
+      {
+        "task_id": "seed12_diff5",
+        "difficulty": 5,
+        "n_planets": 1,
+        "n_obs": 59,
+        "raw_score": 5
+      },
+      {
+        "task_id": "seed15_diff5",
+        "difficulty": 5,
+        "n_planets": 2,
+        "n_obs": 63,
+        "raw_score": 5
+      },
+      {
+        "task_id": "seed21_diff5",
+        "difficulty": 5,
+        "n_planets": 2,
+        "n_obs": 65,
+        "raw_score": 5
+      },
+      {
+        "task_id": "seed26_diff5",
+        "difficulty": 5,
+        "n_planets": 1,
+        "n_obs": 43,
+        "raw_score": 5
+      },
+      {
+        "task_id": "seed27_diff5",
+        "difficulty": 5,
+        "n_planets": 2,
+        "n_obs": 55,
+        "raw_score": 5
+      },
+      {
+        "task_id": "seed32_diff5",
+        "difficulty": 5,
+        "n_planets": 1,
+        "n_obs": 56,
+        "raw_score": 5
+      },
+      {
+        "task_id": "seed49_diff5",
+        "difficulty": 5,
+        "n_planets": 1,
+        "n_obs": 41,
+        "raw_score": 5
+      },
+      {
+        "task_id": "seed53_diff5",
+        "difficulty": 5,
+        "n_planets": 1,
+        "n_obs": 46,
+        "raw_score": 5
+      },
+      {
+        "task_id": "seed58_diff5",
+        "difficulty": 5,
+        "n_planets": 1,
+        "n_obs": 77,
+        "raw_score": 5
+      },
+      {
+        "task_id": "seed9_diff5",
+        "difficulty": 5,
+        "n_planets": 3,
+        "n_obs": 76,
+        "raw_score": 5
+      }
+    ],
+    "6": [
+      {
+        "task_id": "seed0_diff6",
+        "difficulty": 6,
+        "n_planets": 2,
+        "n_obs": 73,
+        "raw_score": 6
+      },
+      {
+        "task_id": "seed11_diff6",
+        "difficulty": 6,
+        "n_planets": 1,
+        "n_obs": 58,
+        "raw_score": 6
+      },
+      {
+        "task_id": "seed19_diff6",
+        "difficulty": 6,
+        "n_planets": 1,
+        "n_obs": 72,
+        "raw_score": 6
+      },
+      {
+        "task_id": "seed23_diff6",
+        "difficulty": 6,
+        "n_planets": 2,
+        "n_obs": 66,
+        "raw_score": 6
+      },
+      {
+        "task_id": "seed24_diff6",
+        "difficulty": 6,
+        "n_planets": 1,
+        "n_obs": 50,
+        "raw_score": 6
+      },
+      {
+        "task_id": "seed2_diff6",
+        "difficulty": 6,
+        "n_planets": 1,
+        "n_obs": 70,
+        "raw_score": 6
+      },
+      {
+        "task_id": "seed42_diff6",
+        "difficulty": 6,
+        "n_planets": 2,
+        "n_obs": 58,
+        "raw_score": 6
+      },
+      {
+        "task_id": "seed54_diff6",
+        "difficulty": 6,
+        "n_planets": 1,
+        "n_obs": 73,
+        "raw_score": 6
+      },
+      {
+        "task_id": "seed63_diff6",
+        "difficulty": 6,
+        "n_planets": 2,
+        "n_obs": 45,
+        "raw_score": 6
+      },
+      {
+        "task_id": "seed64_diff6",
+        "difficulty": 6,
+        "n_planets": 3,
+        "n_obs": 80,
+        "raw_score": 6
+      }
+    ],
+    "7": [
+      {
+        "task_id": "seed18_diff7",
+        "difficulty": 7,
+        "n_planets": 1,
+        "n_obs": 68,
+        "raw_score": 7
+      },
+      {
+        "task_id": "seed33_diff7",
+        "difficulty": 7,
+        "n_planets": 1,
+        "n_obs": 42,
+        "raw_score": 7
+      },
+      {
+        "task_id": "seed37_diff7",
+        "difficulty": 7,
+        "n_planets": 2,
+        "n_obs": 55,
+        "raw_score": 7
+      },
+      {
+        "task_id": "seed39_diff7",
+        "difficulty": 7,
+        "n_planets": 2,
+        "n_obs": 66,
+        "raw_score": 7
+      },
+      {
+        "task_id": "seed40_diff7",
+        "difficulty": 7,
+        "n_planets": 2,
+        "n_obs": 68,
+        "raw_score": 7
+      },
+      {
+        "task_id": "seed43_diff7",
+        "difficulty": 7,
+        "n_planets": 2,
+        "n_obs": 68,
+        "raw_score": 7
+      },
+      {
+        "task_id": "seed46_diff7",
+        "difficulty": 7,
+        "n_planets": 3,
+        "n_obs": 65,
+        "raw_score": 7
+      },
+      {
+        "task_id": "seed47_diff7",
+        "difficulty": 7,
+        "n_planets": 2,
+        "n_obs": 79,
+        "raw_score": 7
+      },
+      {
+        "task_id": "seed4_diff7",
+        "difficulty": 7,
+        "n_planets": 3,
+        "n_obs": 64,
+        "raw_score": 7
+      },
+      {
+        "task_id": "seed7_diff7",
+        "difficulty": 7,
+        "n_planets": 2,
+        "n_obs": 52,
+        "raw_score": 7
+      }
+    ],
+    "8": [
+      {
+        "task_id": "seed104_diff8",
+        "difficulty": 8,
+        "n_planets": 3,
+        "n_obs": 55,
+        "raw_score": 8
+      },
+      {
+        "task_id": "seed17_diff8",
+        "difficulty": 8,
+        "n_planets": 3,
+        "n_obs": 46,
+        "raw_score": 8
+      },
+      {
+        "task_id": "seed1_diff8",
+        "difficulty": 8,
+        "n_planets": 2,
+        "n_obs": 44,
+        "raw_score": 8
+      },
+      {
+        "task_id": "seed28_diff8",
+        "difficulty": 8,
+        "n_planets": 3,
+        "n_obs": 42,
+        "raw_score": 8
+      },
+      {
+        "task_id": "seed31_diff8",
+        "difficulty": 8,
+        "n_planets": 3,
+        "n_obs": 42,
+        "raw_score": 8
+      },
+      {
+        "task_id": "seed36_diff8",
+        "difficulty": 8,
+        "n_planets": 1,
+        "n_obs": 40,
+        "raw_score": 8
+      },
+      {
+        "task_id": "seed55_diff8",
+        "difficulty": 8,
+        "n_planets": 3,
+        "n_obs": 60,
+        "raw_score": 8
+      },
+      {
+        "task_id": "seed84_diff8",
+        "difficulty": 8,
+        "n_planets": 2,
+        "n_obs": 54,
+        "raw_score": 8
+      },
+      {
+        "task_id": "seed91_diff8",
+        "difficulty": 8,
+        "n_planets": 1,
+        "n_obs": 66,
+        "raw_score": 8
+      },
+      {
+        "task_id": "seed95_diff8",
+        "difficulty": 8,
+        "n_planets": 2,
+        "n_obs": 63,
+        "raw_score": 8
+      }
+    ],
+    "9": [
+      {
+        "task_id": "seed101_diff9",
+        "difficulty": 9,
+        "n_planets": 3,
+        "n_obs": 48,
+        "raw_score": 9
+      },
+      {
+        "task_id": "seed106_diff9",
+        "difficulty": 9,
+        "n_planets": 4,
+        "n_obs": 53,
+        "raw_score": 9
+      },
+      {
+        "task_id": "seed119_diff9",
+        "difficulty": 9,
+        "n_planets": 4,
+        "n_obs": 71,
+        "raw_score": 9
+      },
+      {
+        "task_id": "seed146_diff9",
+        "difficulty": 9,
+        "n_planets": 3,
+        "n_obs": 44,
+        "raw_score": 9
+      },
+      {
+        "task_id": "seed147_diff9",
+        "difficulty": 9,
+        "n_planets": 4,
+        "n_obs": 44,
+        "raw_score": 9
+      },
+      {
+        "task_id": "seed176_diff9",
+        "difficulty": 9,
+        "n_planets": 3,
+        "n_obs": 49,
+        "raw_score": 9
+      },
+      {
+        "task_id": "seed41_diff9",
+        "difficulty": 9,
+        "n_planets": 4,
+        "n_obs": 46,
+        "raw_score": 9
+      },
+      {
+        "task_id": "seed51_diff9",
+        "difficulty": 9,
+        "n_planets": 3,
+        "n_obs": 72,
+        "raw_score": 9
+      },
+      {
+        "task_id": "seed79_diff9",
+        "difficulty": 9,
+        "n_planets": 3,
+        "n_obs": 43,
+        "raw_score": 9
+      },
+      {
+        "task_id": "seed93_diff9",
+        "difficulty": 9,
+        "n_planets": 4,
+        "n_obs": 79,
+        "raw_score": 9
+      }
+    ],
+    "10": [
+      {
+        "task_id": "seed10_diff10",
+        "difficulty": 10,
+        "n_planets": 4,
+        "n_obs": 61,
+        "raw_score": 10
+      },
+      {
+        "task_id": "seed122_diff10",
+        "difficulty": 10,
+        "n_planets": 3,
+        "n_obs": 73,
+        "raw_score": 10
+      },
+      {
+        "task_id": "seed125_diff10",
+        "difficulty": 10,
+        "n_planets": 3,
+        "n_obs": 44,
+        "raw_score": 11
+      },
+      {
+        "task_id": "seed13_diff10",
+        "difficulty": 10,
+        "n_planets": 3,
+        "n_obs": 43,
+        "raw_score": 12
+      },
+      {
+        "task_id": "seed14_diff10",
+        "difficulty": 10,
+        "n_planets": 3,
+        "n_obs": 77,
+        "raw_score": 10
+      },
+      {
+        "task_id": "seed196_diff10",
+        "difficulty": 10,
+        "n_planets": 3,
+        "n_obs": 43,
+        "raw_score": 10
+      },
+      {
+        "task_id": "seed197_diff10",
+        "difficulty": 10,
+        "n_planets": 3,
+        "n_obs": 43,
+        "raw_score": 10
+      },
+      {
+        "task_id": "seed5_diff10",
+        "difficulty": 10,
+        "n_planets": 3,
+        "n_obs": 42,
+        "raw_score": 10
+      },
+      {
+        "task_id": "seed82_diff10",
+        "difficulty": 10,
+        "n_planets": 4,
+        "n_obs": 49,
+        "raw_score": 11
+      },
+      {
+        "task_id": "seed89_diff10",
+        "difficulty": 10,
+        "n_planets": 2,
+        "n_obs": 62,
+        "raw_score": 11
+      }
+    ]
+  },
+  "note": "Task IDs normalized to seed*_diff* (removed _nNN suffix for compatibility)."
+}

@@ -1,0 +1,6 @@
+# Extra deps for running the classical / nested-sampling baselines.
+# Install only if you plan to run run_classical_baseline.py or
+# run_nested_sampling_baseline.py.
+astropy>=5.0
+radvel>=1.4
+dynesty>=2.0

@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors / tooling
+.claude/
+.history/
+.vscode/
+.idea/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Run artifacts
+*.log
+*.npy
+results_*/
+batch_results*/
+test_real/
+test_single/
+hf_dataset_export/
+.site_staging/

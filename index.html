@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Stargazer is a scalable benchmark environment for evaluating AI agents on astrophysical model fitting from radial velocity data.">
+  <meta name="keywords" content="Stargazer, AI Agents, Exoplanets, Radial Velocity, Benchmark">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stargazer: A Scalable Model-Fitting Benchmark Environment for AI Agents</title>
+
+  <link rel="icon" href="./static/images/stargazer-mark.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script defer src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="stargazerNav">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="stargazerNav" class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="#overview">Overview</a>
+      <a class="navbar-item" href="#results">Results</a>
+      <a class="navbar-item" href="#figures">Figures</a>
+      <a class="navbar-item" href="#citation">Citation</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title is-bold">
+            <img src="static/images/stargazer-mark.svg" style="width:1.5em;vertical-align: middle" alt="Logo"/>
+            <span class="mathvista" style="vertical-align: middle">Stargazer</span>
+          </h1>
+          <h2 class="subtitle is-3 publication-subtitle">
+            A Scalable Model-Fitting Benchmark Environment for AI Agents under Astrophysical Constraints
+          </h2>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Xinge Liu<sup style="color:#3003e6;">1*</sup>,</span>
+            <span class="author-block">Terry Jingchen Zhang<sup style="color:#ed4b82;">2*</sup>,</span>
+            <span class="author-block">Bernhard Schölkopf<sup style="color:#18dbaa;">3</sup>,</span>
+            <span class="author-block">Zhijing Jin<sup style="color:#ea1ed6;">1,2,3</sup>,</span>
+            <span class="author-block">Kristen Menou<sup style="color:#3003e6;">1</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup style="color:#3003e6;">1</sup>University of Toronto,</span>
+            <span class="author-block"><sup style="color:#ed4b82;">2</sup>Vector Institute,</span>
+            <span class="author-block"><sup style="color:#18dbaa;">3</sup>Max Planck Institute for Intelligent Systems</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="#citation" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><p style="font-size:18px">🤗</p></span>
+                  <span>Dataset</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#results" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><p style="font-size:18px">🏆</p></span>
+                  <span>Results</span>
+                </a>
+              </span>
+            </div>
+            <p class="link-note">Replace the placeholder Paper, arXiv, Code, and Dataset links in <code>index.html</code> when the public URLs are ready.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="overview">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Introduction</h2>
+        <div class="content has-text-justified">
+          <p>
+            We introduce <span class="mathvista">Stargazer</span>, a scalable environment for evaluating AI agents on dynamic, iterative physics-grounded model-fitting tasks using inference on radial-velocity time series data. The benchmark contains 120 tasks across three difficulty tiers, including 20 real archival cases, and covers settings ranging from high-SNR single-planet systems to complex multi-planet configurations requiring careful low-SNR analysis.
+          </p>
+          <p>
+            Across eight frontier agents, we observe a persistent gap between numerical optimization and physical recovery: agents often produce statistically good fits while failing to recover the correct planetary system parameters. <span class="mathvista">Stargazer</span> is designed to evaluate agentic workflows involving period search, iterative Keplerian fitting, model selection, and repeated submission under feedback.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body has-text-centered">
+    <h1 class="title is-1 mathvista">
+      <img src="static/images/stargazer-mark.svg" style="width:1em;vertical-align: middle" alt="Logo"/>
+      <span class="mathvista" style="vertical-align: middle">Overview of Stargazer</span>
+    </h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <p>
+            The benchmark combines a scalable synthetic task generator with real radial-velocity systems from archival astronomy data. Each episode exposes an RV dataset and asks an agent to infer the underlying planetary configuration using tools for scientific computation and structured submission.
+          </p>
+        </div>
+        <div class="publication-image">
+          <img src="./static/figures/figure1.svg" alt="Overview of Stargazer"/>
+        </div>
+        <p class="image-caption">
+          Overview of Stargazer. Left: 120 RV tasks with synthetic difficulty controlled by six physical factors. Center: agents run a periodogram-to-Keplerian workflow and are graded on statistical and physical criteria. Right: strong statistical fit does not guarantee correct physical recovery.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Environment and Evaluation</h2>
+        <div class="content has-text-justified">
+          <p>
+            Agents interact with the environment through a ReAct-style loop with two tools: a <strong>PythonREPL</strong> for analysis code and a <strong>submit_action</strong> interface for proposing candidate planetary systems. After each submission, the evaluator returns criterion-level feedback so agents can revise their hypothesis.
+          </p>
+          <p>
+            A task passes only if all four criteria are satisfied simultaneously: <strong>ok_delta_bic</strong>, <strong>ok_rms</strong>, <strong>ok_match</strong>, and <strong>ok_count</strong>. This conjunction gate is what makes the benchmark physically meaningful rather than a pure curve-fitting exercise.
+          </p>
+        </div>
+        <div class="publication-image">
+          <img src="./static/figures/stargazer_figure2.svg" alt="Stargazer framework"/>
+        </div>
+        <p class="image-caption">
+          Framework of Stargazer. Left: task generation from synthetic physics or archival RV data. Center: agent iteration loop of analysis, submission, and diagnostic feedback. Right: evaluator forward-models submissions and grades with ΔBIC, RMS, Match, and Count.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body has-text-centered">
+    <h1 class="title is-1 mathvista" id="results">
+      <img src="static/images/stargazer-mark.svg" style="width:1em;vertical-align: middle" alt="Logo"/>
+      <span class="mathvista" style="vertical-align: middle">Main Results</span>
+    </h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <p>
+            We evaluate eight frontier agents and two deterministic baselines. Three findings stand out. First, statistical fit quality does not imply physical recovery. Second, increasing test-time compute yields only marginal gains and often reflects recursive failure loops rather than meaningful exploration. Third, all evaluated agents fail on the real-data subset, even though these systems are solved by human astronomers in the literature.
+          </p>
+          <p>
+            Skills help on Easy-tier tasks mainly by improving efficiency and letting agents reach submission more often, but they do not reliably transfer to Hard-tier reasoning. The benchmark therefore exposes a bottleneck in model selection and physically grounded inference rather than in raw numerical optimization.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Main Results Table</h2>
+        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+          <thead>
+            <tr>
+              <th rowspan="2">Model</th>
+              <th colspan="3">Pass Rate (%)</th>
+              <th colspan="3">Env Done (%)</th>
+              <th colspan="3">Pass@3 (%)</th>
+              <th>Real</th>
+            </tr>
+            <tr>
+              <th class="easy-col">Easy</th>
+              <th class="med-col">Med</th>
+              <th class="hard-col">Hard</th>
+              <th class="easy-col">Easy</th>
+              <th class="med-col">Med</th>
+              <th class="hard-col">Hard</th>
+              <th class="easy-col">Easy</th>
+              <th class="med-col">Med</th>
+              <th class="hard-col">Hard</th>
+              <th class="real-col">(20 tasks)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="baseline-row">
+              <td><strong>Classical Pipeline</strong></td>
+              <td class="easy-col">95.0</td><td class="med-col">35.0</td><td class="hard-col">5.0</td>
+              <td class="easy-col">100</td><td class="med-col">100</td><td class="hard-col">100</td>
+              <td class="easy-col">95.0</td><td class="med-col">35.0</td><td class="hard-col">5.0</td>
+              <td class="real-col">---</td>
+            </tr>
+            <tr class="baseline-row">
+              <td><strong>Nested Sampling</strong></td>
+              <td class="easy-col">95.0</td><td class="med-col">32.5</td><td class="hard-col">0.0</td>
+              <td class="easy-col">100</td><td class="med-col">100</td><td class="hard-col">100</td>
+              <td class="easy-col">95.0</td><td class="med-col">32.5</td><td class="hard-col">0.0</td>
+              <td class="real-col">---</td>
+            </tr>
+            <tr>
+              <td>o3-mini</td>
+              <td class="easy-col">40.0</td><td class="med-col">24.2</td><td class="hard-col">0.0</td>
+              <td class="easy-col"><span class="second-best">76.7</span></td><td class="med-col">35.8</td><td class="hard-col">4.2</td>
+              <td class="easy-col"><strong>95.0</strong></td><td class="med-col"><strong>40.0</strong></td><td class="hard-col">0.0</td>
+              <td class="real-col zero-real">0.0</td>
+            </tr>
+            <tr>
+              <td>GPT-5-mini</td>
+              <td class="easy-col"><span class="second-best">76.7</span></td><td class="med-col">33.6</td><td class="hard-col">2.5</td>
+              <td class="easy-col"><span class="second-best">76.7</span></td><td class="med-col"><span class="second-best">46.7</span></td><td class="hard-col">5.0</td>
+              <td class="easy-col"><strong>95.0</strong></td><td class="med-col">35.0</td><td class="hard-col">2.5</td>
+              <td class="real-col zero-real">0.0</td>
+            </tr>
+            <tr>
+              <td>GPT-5.2</td>
+              <td class="easy-col">40.0</td><td class="med-col">30.0</td><td class="hard-col"><strong>5.8</strong></td>
+              <td class="easy-col">40.0</td><td class="med-col">33.3</td><td class="hard-col"><span class="second-best">5.8</span></td>
+              <td class="easy-col">75.0</td><td class="med-col"><span class="second-best">37.5</span></td><td class="hard-col"><strong>12.5</strong></td>
+              <td class="real-col zero-real">0.0</td>
+            </tr>
+            <tr>
+              <td>Kimi-K2.5</td>
+              <td class="easy-col">13.3</td><td class="med-col">17.9</td><td class="hard-col">0.8</td>
+              <td class="easy-col">13.3</td><td class="med-col">19.2</td><td class="hard-col">2.5</td>
+              <td class="easy-col">40.0</td><td class="med-col">35.0</td><td class="hard-col">2.5</td>
+              <td class="real-col zero-real">0.0</td>
+            </tr>
+            <tr>
+              <td>Qwen-3.5-Plus</td>
+              <td class="easy-col">26.7</td><td class="med-col">25.0</td><td class="hard-col">1.6</td>
+              <td class="easy-col">25.0</td><td class="med-col">25.8</td><td class="hard-col">1.7</td>
+              <td class="easy-col">60.0</td><td class="med-col">30.0</td><td class="hard-col">2.5</td>
+              <td class="real-col zero-real">0.0</td>
+            </tr>
+            <tr>
+              <td>Gemini-3.1-Pro</td>
+              <td class="easy-col">71.7</td><td class="med-col"><strong>35.0</strong></td><td class="hard-col"><span class="second-best">5.0</span></td>
+              <td class="easy-col">71.7</td><td class="med-col">35.0</td><td class="hard-col"><span class="second-best">5.8</span></td>
+              <td class="easy-col"><strong>95.0</strong></td><td class="med-col">35.0</td><td class="hard-col"><span class="second-best">7.5</span></td>
+              <td class="real-col zero-real">0.0</td>
+            </tr>
+            <tr>
+              <td>Claude-Sonnet-4.6</td>
+              <td class="easy-col">68.3</td><td class="med-col">22.5</td><td class="hard-col">0.8</td>
+              <td class="easy-col">68.3</td><td class="med-col">28.3</td><td class="hard-col">0.8</td>
+              <td class="easy-col">75.0</td><td class="med-col">32.5</td><td class="hard-col">2.5</td>
+              <td class="real-col zero-real">0.0</td>
+            </tr>
+            <tr>
+              <td><strong>GPT-5.3-codex</strong></td>
+              <td class="easy-col"><strong>80.0</strong></td><td class="med-col"><span class="second-best">30.8</span></td><td class="hard-col">4.2</td>
+              <td class="easy-col"><strong>88.3</strong></td><td class="med-col"><strong>48.3</strong></td><td class="hard-col"><strong>7.5</strong></td>
+              <td class="easy-col"><strong>95.0</strong></td><td class="med-col"><strong>40.0</strong></td><td class="hard-col"><span class="second-best">7.5</span></td>
+              <td class="real-col zero-real">0.0</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="table-caption">
+          Main results on <span class="mathvista">Stargazer</span> across difficulty tiers computed over three independent runs. Pass rates and Env Done rates are averaged; Pass@3 reports the fraction of tasks solved in at least one run. <strong>Bold</strong> = best per column; <span class="second-best">underlined</span> = second best.
+        </p>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-half">
+        <div class="publication-image">
+          <img src="./static/figures/statistical_vs_physical.svg" alt="Statistical versus physical"/>
+        </div>
+        <p class="image-caption">
+          Statistical criteria remain relatively high while physical recovery drops sharply with difficulty.
+        </p>
+      </div>
+      <div class="column is-half">
+        <div class="publication-image">
+          <img src="./static/figures/match_threshold_analysis.svg" alt="Match threshold analysis"/>
+        </div>
+        <p class="image-caption">
+          Match-threshold sensitivity analysis shows that model rankings remain stable across a broad threshold range.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Effect of Skills Injection</h2>
+        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+          <thead>
+            <tr>
+              <th rowspan="2">Model</th>
+              <th colspan="3">Pass Rate Default</th>
+              <th colspan="3">Pass Rate + Skills</th>
+              <th colspan="3">Pass@3 Default</th>
+              <th colspan="3">Pass@3 + Skills</th>
+            </tr>
+            <tr>
+              <th class="easy-col">Easy</th><th class="med-col">Med</th><th class="hard-col">Hard</th>
+              <th class="skill-easy-col">Easy</th><th class="skill-med-col">Med</th><th class="skill-hard-col">Hard</th>
+              <th class="easy-col">Easy</th><th class="med-col">Med</th><th class="hard-col">Hard</th>
+              <th class="skill-easy-col">Easy</th><th class="skill-med-col">Med</th><th class="skill-hard-col">Hard</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>GPT-5-mini</td>
+              <td class="easy-col">76.7</td><td class="med-col">33.6</td><td class="hard-col">2.5</td>
+              <td class="skill-easy-col">90.0 <span class="delta-pos">+13.3</span></td><td class="skill-med-col">35.8 <span class="delta-pos">+2.2</span></td><td class="skill-hard-col">2.5 <span class="delta-neutral">+0.0</span></td>
+              <td class="easy-col">95.0</td><td class="med-col">35.0</td><td class="hard-col">2.5</td>
+              <td class="skill-easy-col">95.0 <span class="delta-neutral">+0.0</span></td><td class="skill-med-col">37.5 <span class="delta-pos">+2.5</span></td><td class="skill-hard-col">2.5 <span class="delta-neutral">+0.0</span></td>
+            </tr>
+            <tr>
+              <td>Qwen-3.5-Plus</td>
+              <td class="easy-col">26.7</td><td class="med-col">25.0</td><td class="hard-col">1.6</td>
+              <td class="skill-easy-col">48.3 <span class="delta-pos">+21.6</span></td><td class="skill-med-col">23.3 <span class="delta-neg">-1.7</span></td><td class="skill-hard-col">0.0 <span class="delta-neg">-1.6</span></td>
+              <td class="easy-col">60.0</td><td class="med-col">30.0</td><td class="hard-col">2.5</td>
+              <td class="skill-easy-col">90.0 <span class="delta-pos">+30.0</span></td><td class="skill-med-col">35.0 <span class="delta-pos">+5.0</span></td><td class="skill-hard-col">0.0 <span class="delta-neg">-2.5</span></td>
+            </tr>
+            <tr>
+              <td>Gemini-3.1-Pro</td>
+              <td class="easy-col">71.7</td><td class="med-col">35.0</td><td class="hard-col">5.0</td>
+              <td class="skill-easy-col">100.0 <span class="delta-pos">+28.3</span></td><td class="skill-med-col">56.7 <span class="delta-pos">+21.7</span></td><td class="skill-hard-col">16.7 <span class="delta-pos">+11.7</span></td>
+              <td class="easy-col">95.0</td><td class="med-col">35.0</td><td class="hard-col">7.5</td>
+              <td class="skill-easy-col">100.0 <span class="delta-pos">+5.0</span></td><td class="skill-med-col">80.0 <span class="delta-pos">+45.0</span></td><td class="skill-hard-col">35.0 <span class="delta-pos">+27.5</span></td>
+            </tr>
+            <tr>
+              <td>GPT-5.3-codex</td>
+              <td class="easy-col">80.0</td><td class="med-col">30.8</td><td class="hard-col">4.2</td>
+              <td class="skill-easy-col">74.6 <span class="delta-neg">-5.4</span></td><td class="skill-med-col">53.2 <span class="delta-pos">+22.4</span></td><td class="skill-hard-col">25.6 <span class="delta-pos">+21.4</span></td>
+              <td class="easy-col">95.0</td><td class="med-col">40.0</td><td class="hard-col">7.5</td>
+              <td class="skill-easy-col">100.0 <span class="delta-pos">+5.0</span></td><td class="skill-med-col">67.5 <span class="delta-pos">+27.5</span></td><td class="skill-hard-col">31.6 <span class="delta-pos">+24.1</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="figures">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Additional Figures</h2>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-half">
+        <div class="publication-image">
+          <img src="./static/figures/failure_correlation_heatmap.svg" alt="Failure correlation heatmap"/>
+        </div>
+        <p class="image-caption">Failure correlation heatmap across difficulty drivers and evaluation outcomes.</p>
+      </div>
+      <div class="column is-half">
+        <div class="publication-image">
+          <img src="./static/figures/case_study_rv_fits.svg" alt="Case study RV fits"/>
+        </div>
+        <p class="image-caption">Representative case-study trajectories illustrating successful recovery and local-minimum failure modes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Per-Criterion Success Rates</h2>
+        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth criteria-table">
+          <thead>
+            <tr>
+              <th rowspan="2">Model</th>
+              <th colspan="4">Easy</th>
+              <th colspan="4">Medium</th>
+              <th colspan="4">Hard</th>
+            </tr>
+            <tr>
+              <th class="stat-col">ΔBIC</th><th class="stat-col">RMS</th><th class="phys-col">Match</th><th class="phys-col">Count</th>
+              <th class="stat-col">ΔBIC</th><th class="stat-col">RMS</th><th class="phys-col">Match</th><th class="phys-col">Count</th>
+              <th class="stat-col">ΔBIC</th><th class="stat-col">RMS</th><th class="phys-col">Match</th><th class="phys-col">Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Kimi-K2.5</td><td class="stat-col">100</td><td class="stat-col">50.0</td><td class="phys-col">50.0</td><td class="phys-col">100</td><td class="stat-col">89.8</td><td class="stat-col">72.7</td><td class="phys-col">27.3</td><td class="phys-col">77.3</td><td class="stat-col">84.9</td><td class="stat-col">64.2</td><td class="phys-col">1.9</td><td class="phys-col">35.8</td></tr>
+            <tr><td>Qwen-3.5-Plus</td><td class="stat-col">90.0</td><td class="stat-col">85.0</td><td class="phys-col">80.0</td><td class="phys-col">100</td><td class="stat-col">87.5</td><td class="stat-col">87.5</td><td class="phys-col">36.4</td><td class="phys-col">80.7</td><td class="stat-col">89.8</td><td class="stat-col">71.2</td><td class="phys-col">0.0</td><td class="phys-col">27.1</td></tr>
+            <tr><td>o3-mini</td><td class="stat-col">98.3</td><td class="stat-col">80.8</td><td class="phys-col">70.0</td><td class="phys-col">82.5</td><td class="stat-col">92.5</td><td class="stat-col">78.6</td><td class="phys-col">27.7</td><td class="phys-col">69.2</td><td class="stat-col">89.7</td><td class="stat-col">62.3</td><td class="phys-col">0.7</td><td class="phys-col">27.4</td></tr>
+            <tr><td>GPT-5.2</td><td class="stat-col">100</td><td class="stat-col">93.1</td><td class="phys-col">86.2</td><td class="phys-col">100</td><td class="stat-col">94.0</td><td class="stat-col">96.4</td><td class="phys-col">43.4</td><td class="phys-col">77.1</td><td class="stat-col">95.2</td><td class="stat-col">90.5</td><td class="phys-col">11.9</td><td class="phys-col">59.5</td></tr>
+            <tr><td>Claude-Sonnet-4.6</td><td class="stat-col">97.9</td><td class="stat-col">97.9</td><td class="phys-col">87.2</td><td class="phys-col">95.7</td><td class="stat-col">100</td><td class="stat-col">98.7</td><td class="phys-col">46.1</td><td class="phys-col">82.9</td><td class="stat-col">96.6</td><td class="stat-col">96.6</td><td class="phys-col">3.4</td><td class="phys-col">10.3</td></tr>
+            <tr><td>Gemini-3.1-Pro</td><td class="stat-col">100</td><td class="stat-col">95.8</td><td class="phys-col">91.7</td><td class="phys-col">100</td><td class="stat-col">95.5</td><td class="stat-col">97.3</td><td class="phys-col">39.6</td><td class="phys-col">76.6</td><td class="stat-col">88.8</td><td class="stat-col">86.7</td><td class="phys-col">3.1</td><td class="phys-col">58.2</td></tr>
+            <tr><td>GPT-5-mini</td><td class="stat-col">100</td><td class="stat-col">92.7</td><td class="phys-col">83.6</td><td class="phys-col">92.7</td><td class="stat-col">93.3</td><td class="stat-col">94.3</td><td class="phys-col">39.0</td><td class="phys-col">73.3</td><td class="stat-col">93.3</td><td class="stat-col">84.4</td><td class="phys-col">0.0</td><td class="phys-col">25.6</td></tr>
+            <tr><td>GPT-5.3-codex</td><td class="stat-col">94.7</td><td class="stat-col">84.2</td><td class="phys-col">78.9</td><td class="phys-col">94.7</td><td class="stat-col">92.6</td><td class="stat-col">90.7</td><td class="phys-col">38.9</td><td class="phys-col">79.6</td><td class="stat-col">100</td><td class="stat-col">100</td><td class="phys-col">33.3</td><td class="phys-col">33.3</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="citation">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">BibTeX</h2>
+        <div class="content has-text-justified">
+<pre><code>@article{liu2026stargazer,
+  title={Stargazer: A Scalable Model-Fitting Benchmark Environment for AI Agents under Astrophysical Constraints},
+  author={Liu, Xinge and Zhang, Terry Jingchen and Sch{\"o}lkopf, Bernhard and Jin, Zhijing and Menou, Kristen},
+  year={2026},
+  note={COLM 2026 submission}
+}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="columns is-centered">
+    <div class="column is-8">
+      <div class="content">
+        <p>
+          This website is adapted from <a href="https://seephys.github.io/">SeePhys</a>, <a href="https://mathvista.github.io/">MathVista</a>, and <a href="https://nerfies.github.io/">Nerfies</a>, licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

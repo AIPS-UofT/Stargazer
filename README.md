@@ -3,9 +3,9 @@
 **A Scalable Model-Fitting Benchmark Environment for AI Agents under Astrophysical Constraints**
 
 Xinge Liu, Terry Jingchen Zhang, Bernhard Schölkopf, Zhijing Jin, Kristen Menou
-*University of Toronto · Vector Institute · Max Planck Institute for Intelligent Systems*
+*University of Toronto · Vector Institute · Max Planck Institute for Intelligent Systems · ELLIS Institute Tübingen
 
-[Project Page](https://gudmorning2025.github.io/Stargazer/) · [Paper (preprint)](#citation)
+[Project Page](aips-uoft.github.io/Stargazer/) · [Paper (preprint)](#citation)
 
 ![Overview of Stargazer](assets/figure1_overview.png)
 

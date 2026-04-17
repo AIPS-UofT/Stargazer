@@ -6,8 +6,6 @@ Xinge Liu, Terry Jingchen Zhang, Bernhard Schölkopf, Zhijing Jin, Kristen Menou
 
 University of Toronto · Vector Institute · Max Planck Institute for Intelligent Systems · ELLIS Institute Tübingen
 
-[Project Page](aips-uoft.github.io/Stargazer/) · [Paper (preprint)](#citation)
-
 ![Overview of Stargazer](assets/figure1_overview.png)
 
 Stargazer is a high-fidelity benchmark for evaluating LLM agents on **iterative, physics-grounded scientific reasoning**. Agents are placed in an exoplanet-discovery workflow: given noisy radial-velocity (RV) time series for a star, they must run periodogram analysis, fit Keplerian orbital models, and submit a planetary configuration that matches an unseen ground truth on **four simultaneous criteria** — statistical fit, residual RMS, per-planet parameter match, and planet count.

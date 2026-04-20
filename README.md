@@ -192,4 +192,4 @@ run_nested_sampling_baseline.py       Bayesian nested-sampling baseline
 
 ## License
 
-Code is released under the LICENSE in this repository. Benchmark task data follows CC-BY-4.0.
+Code is released under the MIT License. Benchmark task data follows CC-BY-4.0; if you use the dataset, please also cite the original archival RV publications referenced in `stargazer/Stargazer_real_data_task/`.

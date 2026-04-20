@@ -182,10 +182,11 @@ run_nested_sampling_baseline.py       Bayesian nested-sampling baseline
 
 ```bibtex
 @article{liu2026stargazer,
-  title  = {Stargazer: A Scalable Model-Fitting Benchmark Environment for AI Agents under Astrophysical Constraints},
-  author = {Liu, Xinge and Zhang, Terry Jingchen and Sch{\"o}lkopf, Bernhard and Jin, Zhijing and Menou, Kristen},
-  year   = {2026},
-  note   = {Preprint, under review}
+  title   = {Stargazer: A Scalable Model-Fitting Benchmark Environment for AI Agents under Astrophysical Constraints},
+  author  = {Liu, Xinge and Zhang, Terry Jingchen and Sch{\"o}lkopf, Bernhard and Jin, Zhijing and Menou, Kristen},
+  year    = {2026},
+  journal = {arXiv preprint arXiv:2604.15664},
+  url     = {https://arxiv.org/abs/2604.15664}
 }
 ```
 

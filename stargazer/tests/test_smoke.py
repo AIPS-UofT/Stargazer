@@ -470,3 +470,56 @@ def test_taskbank_load_applies_rv_only_compat_mapping():
         # Observations should match the RV-only Keplerian model of the converted planets
         target = simulate_rv_keplerian(loaded.config.planets, np.asarray(times, dtype=float), M_star_sun=1.0, gamma_ms=0.0)
         assert np.allclose(np.asarray(loaded.observations.rvs_ms), target, atol=1e-6)
+
+
+def test_wrap_last_line_only_wraps_bare_expressions():
+    from stargazer.agents.tools.python_repl_tool import wrap_last_line_with_print
+
+    # Bare expressions are still echoed, which is what the wrapper is for.
+    assert wrap_last_line_with_print("candidate") == "print(candidate)"
+    assert wrap_last_line_with_print("a = 1\nnp.pi") == "a = 1\nprint(np.pi)"
+
+    # Statements look like a single word to the shape test, but wrapping them
+    # raised TypeError, or a SyntaxError that discarded the whole cell.
+    for statement in ("best=b", "n+=1", "arr[0]=1", "pass", "end=times_days[-1]"):
+        code = "a = 1\n" + statement
+        assert wrap_last_line_with_print(code) == code
+
+
+def test_repl_keeps_assignment_on_last_line():
+    from stargazer.agents.tools.python_repl_tool import execute_python_repl
+
+    _globals, _locals = {}, {}
+    execute_python_repl("rms_sine = 4.49", _globals, _locals)
+
+    # Used to become print(baseline_rms=rms_sine): TypeError, assignment lost.
+    execute_python_repl("baseline_rms=rms_sine", _globals, _locals)
+    assert _globals["baseline_rms"] == 4.49
+
+    # Used to become print(n_peaks+=1): SyntaxError, whole cell discarded, so
+    # the two earlier lines never ran either.
+    execute_python_repl(
+        "periods = [10.0, 20.0]\nn_peaks = len(periods)\nn_peaks+=1", _globals, _locals
+    )
+    assert _globals["periods"] == [10.0, 20.0]
+    assert _globals["n_peaks"] == 3
+
+
+def test_plan_to_action_accepts_zero_time_of_periastron():
+    obs = {
+        "times_days": [0.0, 1.0, 2.0],
+        "rvs_ms": [0.0, 0.0, 0.0],
+        "sigmas_ms": [1.0, 1.0, 1.0],
+    }
+    base = {"P_days": 7.0, "m_sin_i_mjup": 1.0, "e": 0.1, "omega_rad": 0.2}
+
+    # Periastron times one period apart describe the same orbital phase, so a
+    # T0_days of exactly 0.0 must not fall through to the default phase.
+    zero = plan_to_action(
+        {"planets": [{**base, "T0_days": 0.0}]}, obs, max_planets=3, submission_mode="params_only"
+    )
+    shifted = plan_to_action(
+        {"planets": [{**base, "T0_days": 7.0}]}, obs, max_planets=3, submission_mode="params_only"
+    )
+
+    assert np.isclose(zero["planets"][0]["l_rad"], shifted["planets"][0]["l_rad"])

@@ -183,11 +183,25 @@ def sanitize_input(query: str) -> str:
     return ''.join(result)
 
 
+def _is_bare_expression(source: str) -> bool:
+    """True only when *source* is an expression, so wrapping it stays valid.
+
+    Statements such as `x=1`, `n+=1`, `arr[0]=1` and `pass` look like a single
+    word to the shape test below, but wrapping them produces either a keyword
+    argument to print() or a SyntaxError that discards the whole cell.
+    """
+    try:
+        ast.parse(source, mode='eval')
+    except SyntaxError:
+        return False
+    return True
+
+
 def wrap_last_line_with_print(code: str) -> str:
-    """If last line of code is a single word then wrap it in print."""
+    """If last line of code is a single bare expression then wrap it in print."""
     lines = code.strip().split('\n')
     last_line = lines[-1].strip()
-    if re.match(r'^[^\s,()]+$', last_line):
+    if re.match(r'^[^\s,()]+$', last_line) and _is_bare_expression(last_line):
         lines[-1] = f'print({last_line})'
     return '\n'.join(lines)
 

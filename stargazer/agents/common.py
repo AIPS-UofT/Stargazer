@@ -124,7 +124,10 @@ def _parse_phase_to_l_rad(
     phase_rad_val = _get_float("phase_rad")
     phase_deg_val = _get_float("phase_deg")
     phase_val = _get_float("phase")
-    t0_days_val = _get_float("T0_days") or _get_float("T_peri")
+    # `or` would discard a legitimate T0_days of exactly 0.0.
+    t0_days_val = _get_float("T0_days")
+    if t0_days_val is None:
+        t0_days_val = _get_float("T_peri")
     
     # Helper: convert phase_frac to l_rad
     # Agent convention: tp = t0 + phase_frac * P (time of periastron)

@@ -523,3 +523,16 @@ def test_plan_to_action_accepts_zero_time_of_periastron():
     )
 
     assert np.isclose(zero["planets"][0]["l_rad"], shifted["planets"][0]["l_rad"])
+
+
+def test_wrap_last_line_keeps_indentation():
+    from stargazer.agents.tools.python_repl_tool import wrap_last_line_with_print
+
+    # Dedenting to column 0 was a SyntaxError inside a block...
+    assert wrap_last_line_with_print("for t in range(3):\n    t") == (
+        "for t in range(3):\n    print(t)"
+    )
+    # ...and silently hoisted the echo out of a branch that must not run.
+    assert wrap_last_line_with_print("if False:\n    x = 1\n    x") == (
+        "if False:\n    x = 1\n    print(x)"
+    )

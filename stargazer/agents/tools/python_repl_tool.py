@@ -202,7 +202,10 @@ def wrap_last_line_with_print(code: str) -> str:
     lines = code.strip().split('\n')
     last_line = lines[-1].strip()
     if re.match(r'^[^\s,()]+$', last_line) and _is_bare_expression(last_line):
-        lines[-1] = f'print({last_line})'
+        # Keep the original column: a dedented print() is either a SyntaxError
+        # inside a block or, worse, silently hoisted out of it.
+        indent = lines[-1][: len(lines[-1]) - len(lines[-1].lstrip())]
+        lines[-1] = f'{indent}print({last_line})'
     return '\n'.join(lines)
 
 

@@ -536,3 +536,27 @@ def test_wrap_last_line_keeps_indentation():
     assert wrap_last_line_with_print("if False:\n    x = 1\n    x") == (
         "if False:\n    x = 1\n    print(x)"
     )
+
+
+def test_submission_guide_uses_real_newlines():
+    from stargazer.agents.tabular_agent import TabularRvAgent
+
+    # The guide is the prompt's mandatory step 0, so a literal "\n" is the
+    # first thing every agent reads.
+    guide = TabularRvAgent._load_protocol_guide(None)
+    assert "\\n" not in guide
+    assert len(guide.splitlines()) >= 5
+
+
+def test_null_mass_does_not_discard_the_amplitude():
+    planet = {"P_days": 10.0, "K_ms": 50.0, "e": 0.1, "omega_rad": 0.2, "l_rad": 1.0}
+
+    # An LLM writing `"m_sin_i_mjup": null` used to drop K_ms with it, leaving
+    # the planet clamped to the mass floor.
+    for absent in (None, 0.0):
+        kept = canonicalize_plan({"planets": [{**planet, "m_sin_i_mjup": absent}]})
+        assert "K_ms" in kept["planets"][0]
+
+    # A usable mass still takes precedence over the amplitude.
+    native = canonicalize_plan({"planets": [{**planet, "m_sin_i_mjup": 1.5}]})
+    assert "K_ms" not in native["planets"][0]

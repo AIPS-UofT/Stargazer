@@ -435,12 +435,12 @@ class TabularRvAgent:
         """Load protocol guide text from repository file with a safe fallback."""
         guide_path = Path(__file__).resolve().parents[2] / "STARGAZER_SUBMISSION_GUIDE.md"
         fallback = (
-            "Stargazer Submission Guide\\n"
-            "1) Preferred fields: P_days, m_sin_i_mjup, e, omega_rad, l_rad\\n"
-            "2) Reference epoch: t_ref = times_days[0]\\n"
-            "3) Convert M0 to l_rad via l_rad = (Omega_rad + omega_rad + M0) mod 2pi\\n"
-            "4) Avoid mixing phase aliases; if using l_rad, treat it as canonical\\n"
-            "5) Before submit: verify converted action rv_model residual RMS is near sigma\\n"
+            "Stargazer Submission Guide\n"
+            "1) Preferred fields: P_days, m_sin_i_mjup, e, omega_rad, l_rad\n"
+            "2) Reference epoch: t_ref = times_days[0]\n"
+            "3) Convert M0 to l_rad via l_rad = (Omega_rad + omega_rad + M0) mod 2pi\n"
+            "4) Avoid mixing phase aliases; if using l_rad, treat it as canonical\n"
+            "5) Before submit: verify converted action rv_model residual RMS is near sigma\n"
         )
         try:
             return guide_path.read_text(encoding="utf-8")
@@ -674,7 +674,13 @@ class TabularRvAgent:
                             msg_log.append(MessageLogItem(content))
 
                         # Enforce submit gate: do not allow non-submit tools once gate is active.
-                        if force_submit_now and tool_name != "submit_action":
+                        # Forcing a submission the protocol gate would refuse
+                        # locks both tools: neither branch clears either flag.
+                        if (
+                            force_submit_now
+                            and tool_name != "submit_action"
+                            and bool(self._python_globals.get("_protocol_guide_ack", False))
+                        ):
                             result = (
                                 "Policy gate active: Best_RMS_over_med_sigma < 1.1 with Kepler=YES. "
                                 "Your next step MUST be submit_action now; skip summaries and extra analysis."

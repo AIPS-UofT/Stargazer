@@ -364,6 +364,14 @@ def plan_to_action(
     return action
 
 
+def _is_positive_quantity(value) -> bool:
+    """True when `value` is a usable positive number, not None, zero or junk."""
+    try:
+        return float(value) > 0.0
+    except (TypeError, ValueError):
+        return False
+
+
 def canonicalize_plan(plan: Dict[str, Any]) -> Dict[str, Any]:
     """Normalize a plan in-place to avoid conflicting aliases."""
     if not isinstance(plan, dict):
@@ -385,8 +393,9 @@ def canonicalize_plan(plan: Dict[str, Any]) -> Dict[str, Any]:
             out.pop("period_days", None)
         if "e" in out and "eccentricity" in out:
             out.pop("eccentricity", None)
-        # Prefer Stargazer-native mass parameterization when both are present.
-        if "m_sin_i_mjup" in out:
+        # Prefer Stargazer-native mass parameterization when it carries a
+        # usable value; a null or zero mass must not discard the amplitude.
+        if _is_positive_quantity(out.get("m_sin_i_mjup")):
             out.pop("semi_amplitude_ms", None)
             out.pop("K_ms", None)
         if "l_rad" in out:

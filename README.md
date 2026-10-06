@@ -65,6 +65,26 @@ The match-score threshold of 0.8 sits in a sharp bimodal valley of the empirical
 
 ![Match-score distribution and threshold sensitivity](assets/figure3_match_threshold.png)
 
+### Lenient vs. Strict Matching
+
+A stricter match metric is a better guard against reward hacking. The code in this repository currently uses the **lenient** definition from the paper, and all results reported above were obtained with it.
+
+Under the lenient definition, the match score is averaged over *successfully paired* planets only. A submitted planet that is too far from every true planet (distance > 5) is left unpaired and does not lower the score; it is only checked by `ok_count`. An agent can therefore pass by recovering the dominant planet and padding the submission with arbitrary planets until the count is right.
+
+To switch to the **strict** definition, normalise by the number of true planets |T| instead of the number of paired planets |M|, so that every true planet left unpaired contributes zero. In `parameter_matching_score` (`stargazer/evaluator.py`), replace
+
+```python
+score = float(np.mean(s_list)) if len(s_list)>0 else 1.0                  # lenient: sum / |M|
+```
+
+with
+
+```python
+score = float(np.sum(s_list) / len(truth)) if len(s_list)>0 else 1.0      # strict: sum / |T|
+```
+
+The threshold (`ok_match`: score ≥ 0.8) and the other three criteria are unchanged. Submitting the ground-truth parameters passes `ok_match` and `ok_count` under both definitions on all 120 tasks.
+
 ## Difficulty Tiers and Resource Budgets
 
 | Tier | Difficulty | # Tasks | Token Budget | Time Budget | Max Submissions |

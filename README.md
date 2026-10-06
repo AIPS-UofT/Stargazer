@@ -56,7 +56,7 @@ A task counts as solved only when **all four** criteria hold simultaneously:
 
 | Criterion | Definition |
 |---|---|
-| `ok_delta_bic` | Submitted model is statistically preferred over a flat-line null (ΔBIC > 10). |
+| `ok_delta_bic` | Submitted model is statistically preferred over a flat-line null (ΔBIC > 0). |
 | `ok_rms` | Residual RMS ≤ 1.5 × median measurement uncertainty. |
 | `ok_match` | Per-planet match score (Hungarian assignment, exp(−d) on parameter distance) ≥ 0.8. |
 | `ok_count` | Recovered planet count equals truth count. |
